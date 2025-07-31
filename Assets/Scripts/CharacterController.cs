@@ -1,0 +1,101 @@
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+public class CharacterController : MonoBehaviour
+{
+    [Header("-------Movement-------")]
+    [SerializeField] private float moveSpeed;
+    private Vector2 moveDirection;
+
+    [Header("-------Jump-------")]
+    [SerializeField] private float jumpStrength;
+    [SerializeField] private float jumpCutMultiplier;
+    [SerializeField] private float jumpBufferDuration;
+    private float jumpBufferTimer;
+
+    [Header("-------GroundCheck-------")]
+    [SerializeField] private Transform groundCheckPoint;
+    [SerializeField] private float groundCheckRadius;
+    [SerializeField] private LayerMask groundLayer;
+    public bool isGrounded;
+
+    [Header("-------Coyote Time-------")]
+    [SerializeField] private float coyoteTimeDuration;
+    private float coyoteTimeTimer;
+
+    [Header("-------Objects-------")]
+    private Rigidbody2D rb;
+    private PlayerInput playerInput;
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        playerInput = GetComponent<PlayerInput>();
+
+        coyoteTimeTimer = coyoteTimeDuration;
+    }
+
+    private void Update()
+    {
+        isGrounded = Physics2D.OverlapCircle(groundCheckPoint.position, groundCheckRadius, groundLayer);
+
+        if (isGrounded)
+            coyoteTimeTimer = coyoteTimeDuration;
+        else
+            coyoteTimeTimer -= Time.deltaTime;
+
+        jumpBufferTimer -= Time.deltaTime;
+    }
+
+    private void FixedUpdate()
+    {
+        rb.linearVelocityX = moveDirection.x * moveSpeed;
+
+        //Se o jumpBuffer estiver ativo
+        if (jumpBufferTimer >= Mathf.Epsilon)
+        {
+            if
+            (
+                isGrounded ||
+                rb.linearVelocityY < 0f && coyoteTimeTimer >= Mathf.Epsilon
+            )
+            {
+                rb.linearVelocityY = jumpStrength;
+                jumpBufferTimer = 0f;
+            }
+        }
+    }
+
+    public void Move(InputAction.CallbackContext context)
+    {
+        moveDirection = context.ReadValue<Vector2>();
+    }
+
+    public void Jump(InputAction.CallbackContext context)
+    {
+        if (context.started)
+            jumpBufferTimer = jumpBufferDuration;
+
+        else if (context.canceled && rb.linearVelocityY > 0f)
+            rb.linearVelocityY *= jumpCutMultiplier;
+    }
+
+    public void GetSelected()
+    {
+        playerInput.enabled = true;
+    }
+
+    public void GetDesselected()
+    {
+        playerInput.enabled = false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Spike"))
+        {
+            //Chama efeito de morte
+            //Desativa o gameObject
+        }
+    }
+}
