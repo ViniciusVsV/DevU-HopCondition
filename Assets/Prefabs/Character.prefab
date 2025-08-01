@@ -62,6 +62,11 @@ MonoBehaviour:
     m_Bits: 64
   isGrounded: 0
   coyoteTimeDuration: 0.1
+  characterDied:
+    m_PersistentCalls:
+      m_Calls: []
+  initialPosition: {x: 0, y: 0}
+  isActive: 0
 --- !u!50 &2245280736613705469
 Rigidbody2D:
   serializedVersion: 5
@@ -178,7 +183,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1351689883
   m_SortingLayer: 2
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: 7062105374960947951, guid: a93b84d79d865f1419fe0dde9867c4b4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

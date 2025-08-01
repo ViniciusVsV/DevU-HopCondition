@@ -99,7 +99,7 @@ public class CharacterController : MonoBehaviour, IReset
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Spike"))
+        if (other.CompareTag("Spike") || other.CompareTag("Enemy"))
         {
             playerInput.enabled = false;
             spriteRenderer.enabled = false;
