@@ -4,6 +4,7 @@ using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class LevelController : MonoBehaviour
 {
@@ -12,12 +13,15 @@ public class LevelController : MonoBehaviour
 
     private PlayerInput playerInput;
 
+
+    [Header("-------Entities-------")]
     [SerializeField] private List<GameObject> entities = new();
 
-    public bool carrotReached;
-
+    [Header("-------Events-------")]
     public UnityEvent<CharacterController> levelSelected;
     public UnityEvent<bool> levelFinished;
+
+    public bool carrotReached;
 
     void Awake()
     {

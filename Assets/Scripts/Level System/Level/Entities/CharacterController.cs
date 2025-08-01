@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class CharacterController : MonoBehaviour, IReset
@@ -23,7 +24,9 @@ public class CharacterController : MonoBehaviour, IReset
     [SerializeField] private float coyoteTimeDuration;
     private float coyoteTimeTimer;
 
-    [Header("-------Objects-------")]
+    [Header("-------Events-------")]
+    public UnityEvent characterDied;
+
     private Rigidbody2D rb;
     private PlayerInput playerInput;
     private Animator animator;
@@ -98,10 +101,10 @@ public class CharacterController : MonoBehaviour, IReset
     {
         if (other.CompareTag("Spike"))
         {
-            //Chamar efeitos de morte
-
             playerInput.enabled = false;
             spriteRenderer.enabled = false;
+
+            characterDied.Invoke();
         }
     }
 

@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CarrotController : MonoBehaviour, IReset
 {
@@ -11,6 +12,8 @@ public class CarrotController : MonoBehaviour, IReset
     private Collider2D col;
 
     private bool collided;
+
+    public UnityEvent carrotCollected;
 
     private void Awake()
     {
@@ -34,6 +37,8 @@ public class CarrotController : MonoBehaviour, IReset
             spriteRenderer.enabled = false;
 
             levelController.carrotReached = true;
+
+            carrotCollected.Invoke();
 
             if (other.gameObject == recordedMovements.activeCharacter.gameObject)
                 StartCoroutine(Routine());

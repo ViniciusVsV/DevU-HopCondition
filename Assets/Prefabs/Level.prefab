@@ -928,6 +928,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6808134385965231055}
+  - component: {fileID: 3761192932097809413}
   - component: {fileID: 195236645027023004}
   m_Layer: 0
   m_Name: Background
@@ -945,12 +946,26 @@ Transform:
   m_GameObject: {fileID: 3892184669243777290}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2, y: 3, z: -0.06694875}
+  m_LocalPosition: {x: -0.2736969, y: 0.31814384, z: -0.12128365}
   m_LocalScale: {x: 6.4, y: 6.4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4868761589302696256}
+  m_Father: {fileID: 5342364912108932479}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3761192932097809413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3892184669243777290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d43fffe90acda84e93084a8052a561b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelCompletedColor: {r: 0.66195786, g: 1, b: 0.60188675, a: 1}
+  levelFailedColor: {r: 1, g: 0.48867923, b: 0.48867923, a: 1}
 --- !u!212 &195236645027023004
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1039,7 +1054,6 @@ Transform:
   - {fileID: 207421612878337725}
   - {fileID: 5342364912108932479}
   - {fileID: 1908059173245034254}
-  - {fileID: 6808134385965231055}
   - {fileID: 7799904489709027242}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1055,12 +1069,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 299b9d7fb1773b64bb938f0aa1fbb4a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  recordedMovements: {fileID: 11400000, guid: 5bbb7956e3fe01a48bf659763c635c19, type: 2}
   cinemachineCamera: {fileID: 7933524502490540703}
   character: {fileID: 4363681480843979040}
   entities:
   - {fileID: 2008741132555811515}
   - {fileID: 8326308103162935226}
+  - {fileID: 3892184669243777290}
   levelSelected:
     m_PersistentCalls:
       m_Calls:
@@ -1091,6 +1105,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  carrotReached: 0
 --- !u!1 &4420098205515291024
 GameObject:
   m_ObjectHideFlags: 0
@@ -1344,6 +1359,7 @@ Transform:
   m_Children:
   - {fileID: 2744286034731555150}
   - {fileID: 7630960744265166379}
+  - {fileID: 6808134385965231055}
   m_Father: {fileID: 4868761589302696256}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8326308103162935226
@@ -1395,6 +1411,21 @@ MonoBehaviour:
   recordedMovements: {fileID: 11400000, guid: 5bbb7956e3fe01a48bf659763c635c19, type: 2}
   levelController: {fileID: 6085000040964020673}
   desselectionDelay: 1
+  carrotCollected:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3761192932097809413}
+        m_TargetAssemblyTypeName: BackgroundController, Assembly-CSharp
+        m_MethodName: SetCompletedColor
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!212 &1633215956615196229
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1551,6 +1582,38 @@ PrefabInstance:
     - target: {fileID: 2510783239758025046, guid: 869f5ba915523be43ba771daa1d69872, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4054181645405823288, guid: 869f5ba915523be43ba771daa1d69872, type: 3}
+      propertyPath: backgroundController
+      value: 
+      objectReference: {fileID: 3761192932097809413}
+    - target: {fileID: 4054181645405823288, guid: 869f5ba915523be43ba771daa1d69872, type: 3}
+      propertyPath: characterDied.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4054181645405823288, guid: 869f5ba915523be43ba771daa1d69872, type: 3}
+      propertyPath: characterDied.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4054181645405823288, guid: 869f5ba915523be43ba771daa1d69872, type: 3}
+      propertyPath: characterDied.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3761192932097809413}
+    - target: {fileID: 4054181645405823288, guid: 869f5ba915523be43ba771daa1d69872, type: 3}
+      propertyPath: characterDied.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4054181645405823288, guid: 869f5ba915523be43ba771daa1d69872, type: 3}
+      propertyPath: characterDied.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetFailedColor
+      objectReference: {fileID: 0}
+    - target: {fileID: 4054181645405823288, guid: 869f5ba915523be43ba771daa1d69872, type: 3}
+      propertyPath: characterDied.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: BackgroundController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4054181645405823288, guid: 869f5ba915523be43ba771daa1d69872, type: 3}
+      propertyPath: characterDied.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
