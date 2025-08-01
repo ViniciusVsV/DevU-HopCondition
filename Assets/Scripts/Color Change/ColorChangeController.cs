@@ -13,7 +13,7 @@ public class ColorChangeController : MonoBehaviour
         Color.cyan
     };
 
-    private List<ColorChanger> colorChangers = new();
+    public List<ColorChanger> colorChangers = new();
     private int currentColorIndex = 0;
     private float lerpFactor = 0f;
     private Color currentColor;
@@ -30,7 +30,10 @@ public class ColorChangeController : MonoBehaviour
 
         // Set initial color for all changers
         foreach (var changer in colorChangers)
-            changer.SetColor(currentColor);
+        {
+            if (changer.gameObject.activeInHierarchy)
+                changer.SetColor(currentColor);
+        }
     }
 
     void Update()
@@ -46,7 +49,7 @@ public class ColorChangeController : MonoBehaviour
         // Update all color changers
         foreach (var changer in colorChangers)
         {
-            if (changer != null) // Check if destroyed
+            if (changer.gameObject.activeInHierarchy)
                 changer.SetColor(newColor);
         }
 

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class CharacterController : MonoBehaviour
+public class CharacterController : MonoBehaviour, IReset
 {
     [Header("-------Movement-------")]
     [SerializeField] private float moveSpeed;
@@ -27,14 +27,21 @@ public class CharacterController : MonoBehaviour
     private Rigidbody2D rb;
     private PlayerInput playerInput;
     private Animator animator;
+    private SpriteRenderer spriteRenderer;
+
+    public bool isActive;
+    private Vector2 initialPosition;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         playerInput = GetComponent<PlayerInput>();
         animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
 
         coyoteTimeTimer = coyoteTimeDuration;
+
+        initialPosition = transform.position;
     }
 
     private void Update()
@@ -91,8 +98,23 @@ public class CharacterController : MonoBehaviour
     {
         if (other.CompareTag("Spike"))
         {
-            //Chama efeito de morte
-            //Desativa o gameObject
+            //Chamar efeitos de morte
+
+            playerInput.enabled = false;
+            spriteRenderer.enabled = false;
         }
+    }
+
+    public void Reset()
+    {
+        //Volta o personagem à posição inicial  
+        transform.position = initialPosition;
+
+        //Reativa sprite renderer
+        spriteRenderer.enabled = true;
+
+        //SE o personagem atual estiver ativo, reativa o playerINput também
+        if (isActive)
+            playerInput.enabled = true;
     }
 }

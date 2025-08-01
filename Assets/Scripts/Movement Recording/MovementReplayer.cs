@@ -12,6 +12,8 @@ public class MovementReplayer : MonoBehaviour
     private float timeStamp;
     private int index1, index2;
 
+    public bool isReplaying;
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.R))
@@ -19,6 +21,12 @@ public class MovementReplayer : MonoBehaviour
 
         if (recordedMovements.isReplaying)
         {
+            if (timeStamp >= recordedMovements.timeStamps[^1])
+            {
+                recordedMovements.isReplaying = false;
+                isReplaying = false;
+            }
+
             timeStamp += Time.deltaTime;
 
             GetIndexes();
@@ -28,6 +36,8 @@ public class MovementReplayer : MonoBehaviour
 
     public void StartReplaying()
     {
+        isReplaying = true;
+
         timeStamp = 0f;
 
         recordedMovements.isRecording = false;

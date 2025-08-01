@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2442206657696311109}
   - component: {fileID: 2803848753537251375}
   m_Layer: 5
-  m_Name: Level Button
+  m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -145,10 +145,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3443901778766669610}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 6245207060723276799}
+        m_TargetAssemblyTypeName: ButtonController, Assembly-CSharp
+        m_MethodName: DisableAll
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -172,7 +172,7 @@ GameObject:
   - component: {fileID: 8431543979374654157}
   - component: {fileID: 4323147475810000808}
   m_Layer: 6
-  m_Name: Terrain
+  m_Name: Tilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1049,11 +1049,10 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 207421612878337725}
-  - {fileID: 2744286034731555150}
+  - {fileID: 5342364912108932479}
   - {fileID: 1908059173245034254}
   - {fileID: 6808134385965231055}
   - {fileID: 7799904489709027242}
-  - {fileID: 7630960744265166379}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6085000040964020673
@@ -1070,7 +1069,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   recordedMovements: {fileID: 11400000, guid: 5bbb7956e3fe01a48bf659763c635c19, type: 2}
   cinemachineCamera: {fileID: 7933524502490540703}
-  character: {fileID: 2008741132555811515}
+  character: {fileID: 4363681480843979040}
+  entities:
+  - {fileID: 2008741132555811515}
+  - {fileID: 8326308103162935226}
 --- !u!1 &4420098205515291024
 GameObject:
   m_ObjectHideFlags: 0
@@ -1082,7 +1084,7 @@ GameObject:
   - component: {fileID: 1908059173245034254}
   - component: {fileID: 7520340099957346811}
   m_Layer: 0
-  m_Name: Grid
+  m_Name: Terrain Grid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1293,6 +1295,39 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 0
+--- !u!1 &7103443573458771358
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5342364912108932479}
+  m_Layer: 0
+  m_Name: Entities
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5342364912108932479
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7103443573458771358}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.7263031, y: 2.6818562, z: 0.054334898}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2744286034731555150}
+  - {fileID: 7630960744265166379}
+  m_Father: {fileID: 4868761589302696256}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8326308103162935226
 GameObject:
   m_ObjectHideFlags: 0
@@ -1320,12 +1355,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8326308103162935226}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.55, y: 0.326, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 5.2763033, y: -2.355856, z: -0.054334898}
   m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4868761589302696256}
+  m_Father: {fileID: 5342364912108932479}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &831941953281595263
 MonoBehaviour:
@@ -1341,6 +1376,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   recordedMovements: {fileID: 11400000, guid: 5bbb7956e3fe01a48bf659763c635c19, type: 2}
   levelController: {fileID: 6085000040964020673}
+  desselectionDelay: 1
 --- !u!212 &1633215956615196229
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1448,7 +1484,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 4868761589302696256}
+    m_TransformParent: {fileID: 5342364912108932479}
     m_Modifications:
     - target: {fileID: 2246674976235139747, guid: 869f5ba915523be43ba771daa1d69872, type: 3}
       propertyPath: m_Name
@@ -1460,15 +1496,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2510783239758025046, guid: 869f5ba915523be43ba771daa1d69872, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.532
+      value: -5.8056965
       objectReference: {fileID: 0}
     - target: {fileID: 2510783239758025046, guid: 869f5ba915523be43ba771daa1d69872, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.417
+      value: -2.2648563
       objectReference: {fileID: 0}
     - target: {fileID: 2510783239758025046, guid: 869f5ba915523be43ba771daa1d69872, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.052126743
+      value: -0.106461644
       objectReference: {fileID: 0}
     - target: {fileID: 2510783239758025046, guid: 869f5ba915523be43ba771daa1d69872, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1513,3 +1549,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2510783239758025046, guid: 869f5ba915523be43ba771daa1d69872, type: 3}
   m_PrefabInstance: {fileID: 346128004716775448}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4363681480843979040 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4054181645405823288, guid: 869f5ba915523be43ba771daa1d69872, type: 3}
+  m_PrefabInstance: {fileID: 346128004716775448}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2008741132555811515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d53fd0c80de84047baebb057245499c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
