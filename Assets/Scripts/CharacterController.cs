@@ -26,11 +26,13 @@ public class CharacterController : MonoBehaviour
     [Header("-------Objects-------")]
     private Rigidbody2D rb;
     private PlayerInput playerInput;
+    private Animator animator;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         playerInput = GetComponent<PlayerInput>();
+        animator = GetComponent<Animator>();
 
         coyoteTimeTimer = coyoteTimeDuration;
     }
@@ -45,6 +47,9 @@ public class CharacterController : MonoBehaviour
             coyoteTimeTimer -= Time.deltaTime;
 
         jumpBufferTimer -= Time.deltaTime;
+
+        animator.SetFloat("xSpeed", rb.linearVelocityX);
+        animator.SetFloat("ySpeed", rb.linearVelocityY);
     }
 
     private void FixedUpdate()
@@ -62,6 +67,8 @@ public class CharacterController : MonoBehaviour
             {
                 rb.linearVelocityY = jumpStrength;
                 jumpBufferTimer = 0f;
+
+                animator.SetTrigger("jump");
             }
         }
     }

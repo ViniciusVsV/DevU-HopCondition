@@ -1,4 +1,5 @@
 using System.Net.Security;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class CharacterSelector : MonoBehaviour
@@ -9,11 +10,7 @@ public class CharacterSelector : MonoBehaviour
     private CharacterController[] characterControllers;
     private CharacterController chosenCharacter;
 
-    //Ao escolher um personagem:
-    //Desativar os inputs dos outros personagens
-    //Desativar os recorders dos outros personagens
-    //Desativar o replayer do personagem selecionado
-    //Setar o personagem selecionado no scriptable object
+    [SerializeField] private CinemachineCamera cinemachineCamera;
 
     private void Start()
     {
@@ -30,6 +27,9 @@ public class CharacterSelector : MonoBehaviour
 
         else if (Input.GetKeyDown(KeyCode.R))
             DesselectCharacter();
+
+        else if (Input.GetKeyDown(KeyCode.Z))
+            cinemachineCamera.Priority = 10;
     }
 
     public void SelectCharacter(CharacterController chosenCharacter)
@@ -38,7 +38,7 @@ public class CharacterSelector : MonoBehaviour
 
         movementRecorder.StartRecording(chosenCharacter.transform);
         movementReplayer.Setup();
-        
+
         chosenCharacter.GetSelected();
     }
 
