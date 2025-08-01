@@ -29,8 +29,8 @@ public class CharacterController : MonoBehaviour, IReset
     private Animator animator;
     private SpriteRenderer spriteRenderer;
 
+    public Vector2 initialPosition;
     public bool isActive;
-    private Vector2 initialPosition;
 
     private void Awake()
     {

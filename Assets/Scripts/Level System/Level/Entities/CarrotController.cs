@@ -10,27 +10,33 @@ public class CarrotController : MonoBehaviour, IReset
     private SpriteRenderer spriteRenderer;
     private Collider2D col;
 
-    private void Start()
+    private bool collided;
+
+    private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         col = GetComponent<Collider2D>();
     }
 
+    void Update()
+    {
+        collided = false;
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !collided)
         {
-            if (other.transform == recordedMovements.activeCharacter)
-            {
-                Debug.Log("PORRA");
-                StartCoroutine(Routine());
-            }
+            collided = true;
 
-            //dESATIVA colider
             col.enabled = false;
 
-            //desativa sprite renderer
             spriteRenderer.enabled = false;
+
+            levelController.carrotReached = true;
+
+            if (other.gameObject == recordedMovements.activeCharacter.gameObject)
+                StartCoroutine(Routine());
         }
     }
 

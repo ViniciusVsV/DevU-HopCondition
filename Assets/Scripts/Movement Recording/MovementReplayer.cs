@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.Events;
 
 public class MovementReplayer : MonoBehaviour
 {
@@ -12,19 +12,19 @@ public class MovementReplayer : MonoBehaviour
     private float timeStamp;
     private int index1, index2;
 
-    public bool isReplaying;
+    public UnityEvent replayFinished;
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
-            timeStamp = 0f;
-
         if (recordedMovements.isReplaying)
         {
             if (timeStamp >= recordedMovements.timeStamps[^1])
             {
                 recordedMovements.isReplaying = false;
-                isReplaying = false;
+
+                replayFinished.Invoke();
+
+                return;
             }
 
             timeStamp += Time.deltaTime;
@@ -36,7 +36,7 @@ public class MovementReplayer : MonoBehaviour
 
     public void StartReplaying()
     {
-        isReplaying = true;
+        Setup();
 
         timeStamp = 0f;
 
@@ -46,15 +46,15 @@ public class MovementReplayer : MonoBehaviour
 
     public void Setup()
     {
-        CharacterController[] characters = FindObjectsByType<CharacterController>(FindObjectsSortMode.None);
+        CharacterController[] characters = FindObjectsByType<CharacterController>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
 
         foreach (CharacterController character in characters)
         {
-            if (character.transform == recordedMovements.activeCharacter)
+            if (character == recordedMovements.activeCharacter)
                 continue;
 
             characterTransforms.Add(character.transform);
-            initialDisplacements.Add(character.transform.position - recordedMovements.activeCharacter.position);
+            initialDisplacements.Add(character.initialPosition - recordedMovements.activeCharacter.initialPosition);
         }
     }
 

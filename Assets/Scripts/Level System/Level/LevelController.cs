@@ -2,34 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class LevelController : MonoBehaviour
 {
-    [SerializeField] private RecordedMovements recordedMovements;
-    private MovementRecorder movementRecorder;
-    private MovementReplayer movementReplayer;
-
     [SerializeField] private CinemachineCamera cinemachineCamera;
     [SerializeField] private CharacterController character;
 
     private PlayerInput playerInput;
-    private LevelButtonsController levelButtonsController;
-
 
     [SerializeField] private List<GameObject> entities = new();
 
+    public bool carrotReached;
+
+    public UnityEvent<CharacterController> levelSelected;
+    public UnityEvent levelFinished;
+
     void Awake()
     {
-        movementRecorder = FindFirstObjectByType<MovementRecorder>();
-        movementReplayer = FindFirstObjectByType<MovementReplayer>();
-
         playerInput = character.GetComponent<PlayerInput>();
-    }
-
-    void Start()
-    {
-        levelButtonsController = FindFirstObjectByType<LevelButtonsController>();
     }
 
     public void SelectLevel()
@@ -37,14 +29,7 @@ public class LevelController : MonoBehaviour
         //Aumenta prioridade da câmera
         cinemachineCamera.Priority = 10;
 
-        //Define o personagem da fase como o principal
-        recordedMovements.activeCharacter = character.transform;
-
-        //Faz o setup do replayer
-        movementReplayer.Setup();
-
-        //Começa a gravar os movimentos
-        movementRecorder.StartRecording(character.transform);
+        levelSelected.Invoke(character);
 
         StartCoroutine(SelectRoutine());
     }
@@ -62,23 +47,19 @@ public class LevelController : MonoBehaviour
 
     public void DesselectLevel()
     {
+        levelFinished.Invoke();
+
         cinemachineCamera.Priority = 0;
 
         playerInput.enabled = false;
 
         character.isActive = false;
-
-        movementReplayer.StartReplaying();
     }
 
-    void Update()
+    public void ResetLevel()
     {
-        if (Input.GetKeyDown(KeyCode.F))
-            ResetLevel();
-    }
+        carrotReached = false;
 
-    private void ResetLevel()
-    {
         foreach (GameObject entity in entities)
         {
             IReset reset = entity.GetComponent<IReset>();

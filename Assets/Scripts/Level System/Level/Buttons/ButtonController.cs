@@ -10,18 +10,11 @@ public class ButtonController : MonoBehaviour, IPointerEnterHandler, IPointerExi
     private Image buttonImage;
     private Color originalColor;
 
-    private LevelButtonsController levelButtonsController;
-
     void Awake()
     {
         button = GetComponent<Button>();
         buttonImage = GetComponent<Image>();
         originalColor = buttonImage.color;
-    }
-
-    void Start()
-    {
-        levelButtonsController = FindFirstObjectByType<LevelButtonsController>();
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -47,14 +40,5 @@ public class ButtonController : MonoBehaviour, IPointerEnterHandler, IPointerExi
     {
         buttonImage.enabled = true;
         button.enabled = true;
-    }
-
-    public void DisableAll()
-    {
-        levelButtonsController.DisableButtons();
-    }
-    public void EnableAll()
-    {
-        levelButtonsController.EnableButtons();
     }
 }

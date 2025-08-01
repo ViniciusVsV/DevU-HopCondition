@@ -17,14 +17,14 @@ public class MovementRecorder : MonoBehaviour
             if (recordTimer >= 1 / recordedMovements.recordFrequency)
             {
                 recordedMovements.timeStamps.Add(timeStamp);
-                recordedMovements.positions.Add(recordedMovements.activeCharacter.position);
+                recordedMovements.positions.Add(recordedMovements.activeCharacter.transform.position);
 
                 recordTimer = 0f;
             }
         }
     }
 
-    public void StartRecording(Transform chosenCharacter)
+    public void StartRecording(CharacterController chosenCharacter)
     {
         timeStamp = 0f;
 

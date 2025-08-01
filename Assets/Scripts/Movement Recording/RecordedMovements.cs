@@ -9,7 +9,7 @@ public class RecordedMovements : ScriptableObject
     public List<float> timeStamps;
     public List<Vector2> positions;
 
-    public Transform activeCharacter;
+    public CharacterController activeCharacter;
 
     public bool isRecording;
     public bool isReplaying;

@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class LevelButtonsController : MonoBehaviour
+public class ButtonsManager : MonoBehaviour
 {
-    public List<ButtonController> buttonControllers = new();
+    private List<ButtonController> buttonControllers = new();
 
     void Start()
     {
