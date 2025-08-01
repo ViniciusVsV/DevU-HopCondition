@@ -54,5 +54,8 @@ TagManager:
   - name: Fairy
     uniqueID: 3991232513
     locked: 0
+  - name: UI
+    uniqueID: 3198459517
+    locked: 0
   m_RenderingLayers:
   - Default

@@ -12,12 +12,17 @@ public class MovementReplayer : MonoBehaviour
     private float timeStamp;
     private int index1, index2;
 
+    [SerializeField] private float fastForwardSpeed = 2f;
+    public bool isFastForwarded;
+
     public UnityEvent replayFinished;
 
     private void Update()
     {
         if (recordedMovements.isReplaying)
         {
+            Time.timeScale = isFastForwarded ? fastForwardSpeed : 1f;
+
             if (timeStamp >= recordedMovements.timeStamps[^1])
             {
                 recordedMovements.isReplaying = false;
@@ -32,6 +37,8 @@ public class MovementReplayer : MonoBehaviour
             GetIndexes();
             ApplyMovements();
         }
+        else
+            Time.timeScale = 1f;
     }
 
     public void StartReplaying()
@@ -96,5 +103,10 @@ public class MovementReplayer : MonoBehaviour
                 );
             }
         }
+    }
+
+    public void ToggleFastForward()
+    {
+        isFastForwarded = !isFastForwarded;
     }
 }
