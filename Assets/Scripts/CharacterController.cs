@@ -87,16 +87,6 @@ public class CharacterController : MonoBehaviour
             rb.linearVelocityY *= jumpCutMultiplier;
     }
 
-    public void GetSelected()
-    {
-        playerInput.enabled = true;
-    }
-
-    public void GetDesselected()
-    {
-        playerInput.enabled = false;
-    }
-
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Spike"))

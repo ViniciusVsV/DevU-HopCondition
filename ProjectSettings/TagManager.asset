@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Spike
   layers:
   - Default
   - TransparentFX
@@ -49,6 +50,9 @@ TagManager:
     locked: 0
   - name: Character
     uniqueID: 2943277413
+    locked: 0
+  - name: Fairy
+    uniqueID: 3991232513
     locked: 0
   m_RenderingLayers:
   - Default

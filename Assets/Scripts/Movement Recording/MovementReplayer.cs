@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class MovementReplayer : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class MovementReplayer : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.R))
+            timeStamp = 0f;
+
         if (recordedMovements.isReplaying)
         {
             timeStamp += Time.deltaTime;
@@ -20,6 +24,14 @@ public class MovementReplayer : MonoBehaviour
             GetIndexes();
             ApplyMovements();
         }
+    }
+
+    public void StartReplaying()
+    {
+        timeStamp = 0f;
+
+        recordedMovements.isRecording = false;
+        recordedMovements.isReplaying = true;
     }
 
     public void Setup()
@@ -34,14 +46,6 @@ public class MovementReplayer : MonoBehaviour
             characterTransforms.Add(character.transform);
             initialDisplacements.Add(character.transform.position - recordedMovements.activeCharacter.position);
         }
-    }
-
-    public void StartReplaying()
-    {
-        timeStamp = 0f;
-
-        recordedMovements.isRecording = false;
-        recordedMovements.isReplaying = true;
     }
 
     private void GetIndexes()
