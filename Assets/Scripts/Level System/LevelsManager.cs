@@ -63,7 +63,7 @@ public class LevelsManager : MonoBehaviour
     //Após finalizar a fase selecionada, inicia o estado de Replaying
     //Nele todos os personagens diferentes do personagem que acabou de ser jogado imitarão os inputs deste
     //Acaba quando o replay terminar
-    public void SetReplayingState()
+    public void SetReplayingState(bool repeating)
     {
         currentLevel++;
 
@@ -71,12 +71,28 @@ public class LevelsManager : MonoBehaviour
 
         buttonsManager.DisableButtons();
 
+        //Chamar o setup com os personagens que serão afetados
+        //Se for em caso normal, pegar todos os ativos
+        List<CharacterController> aux = new();
+
+        if (!repeating)
+        {
+            for (int i = 0; i <= currentLevel; i++)
+                aux.Add(levelControllers[i].GetCharacter());
+        }
+
+        //Se for o caso em que o está repetindo a conclusão de fases, pegar apenas o personagem que acavou de ser criado
+        else
+            aux.Add(levelControllers[currentLevel].GetCharacter());
+
+        movementReplayer.Setup(aux);
+
         StartCoroutine(ReplayingRoutine());
     }
 
     private IEnumerator ReplayingRoutine()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.3f);
 
         movementReplayer.StartReplaying();
     }
@@ -109,6 +125,6 @@ public class LevelsManager : MonoBehaviour
 
         //Se todas ATIVAS foram finalizadas
         else
-            SetReplayingState();
+            SetReplayingState(true);
     }
 }

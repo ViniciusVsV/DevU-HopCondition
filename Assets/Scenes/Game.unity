@@ -172,7 +172,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 3230b41e4ac5f0e4eaefb3362b89ab57, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 2
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
@@ -517,7 +517,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6085000040964020673, guid: d7abc9dd9b712144a8b7264e8c911cb7, type: 3}
       propertyPath: levelFinished.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6085000040964020673, guid: d7abc9dd9b712144a8b7264e8c911cb7, type: 3}
       propertyPath: levelSelected.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -631,7 +631,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6085000040964020673, guid: d7abc9dd9b712144a8b7264e8c911cb7, type: 3}
       propertyPath: levelFinished.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6085000040964020673, guid: d7abc9dd9b712144a8b7264e8c911cb7, type: 3}
       propertyPath: levelSelected.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -1594,7 +1594,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6085000040964020673, guid: d7abc9dd9b712144a8b7264e8c911cb7, type: 3}
       propertyPath: levelFinished.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6085000040964020673, guid: d7abc9dd9b712144a8b7264e8c911cb7, type: 3}
       propertyPath: levelSelected.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -1977,7 +1977,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6085000040964020673, guid: d7abc9dd9b712144a8b7264e8c911cb7, type: 3}
       propertyPath: levelFinished.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6085000040964020673, guid: d7abc9dd9b712144a8b7264e8c911cb7, type: 3}
       propertyPath: levelSelected.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -2398,7 +2398,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6085000040964020673, guid: d7abc9dd9b712144a8b7264e8c911cb7, type: 3}
       propertyPath: levelFinished.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6085000040964020673, guid: d7abc9dd9b712144a8b7264e8c911cb7, type: 3}
       propertyPath: levelSelected.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -2512,7 +2512,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6085000040964020673, guid: d7abc9dd9b712144a8b7264e8c911cb7, type: 3}
       propertyPath: levelFinished.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6085000040964020673, guid: d7abc9dd9b712144a8b7264e8c911cb7, type: 3}
       propertyPath: levelSelected.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -2642,7 +2642,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6085000040964020673, guid: d7abc9dd9b712144a8b7264e8c911cb7, type: 3}
       propertyPath: levelFinished.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6085000040964020673, guid: d7abc9dd9b712144a8b7264e8c911cb7, type: 3}
       propertyPath: levelSelected.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -2745,7 +2745,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 4371433c1f238634d80a44abfb4d8ccd, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 2
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
@@ -3515,7 +3515,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6085000040964020673, guid: d7abc9dd9b712144a8b7264e8c911cb7, type: 3}
       propertyPath: levelFinished.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6085000040964020673, guid: d7abc9dd9b712144a8b7264e8c911cb7, type: 3}
       propertyPath: levelSelected.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -3627,6 +3627,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  aux: []
 --- !u!1 &1476674773
 GameObject:
   m_ObjectHideFlags: 0
@@ -4361,7 +4362,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6085000040964020673, guid: d7abc9dd9b712144a8b7264e8c911cb7, type: 3}
       propertyPath: levelFinished.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6085000040964020673, guid: d7abc9dd9b712144a8b7264e8c911cb7, type: 3}
       propertyPath: levelSelected.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -4554,6 +4555,6 @@ SceneRoots:
   - {fileID: 811307398}
   - {fileID: 488214655}
   - {fileID: 842720340}
+  - {fileID: 2037288039}
   - {fileID: 2137355185}
   - {fileID: 1027324125}
-  - {fileID: 2037288039}

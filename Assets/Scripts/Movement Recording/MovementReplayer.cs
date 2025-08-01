@@ -17,6 +17,8 @@ public class MovementReplayer : MonoBehaviour
 
     public UnityEvent replayFinished;
 
+    public List<CharacterController> aux;
+
     private void Update()
     {
         if (recordedMovements.isReplaying)
@@ -41,21 +43,15 @@ public class MovementReplayer : MonoBehaviour
             Time.timeScale = 1f;
     }
 
-    public void StartReplaying()
+    ///Permite passar os personagens que serão afetados pelo replay
+    public void Setup(List<CharacterController> characterControllers)
     {
-        Setup();
+        aux = characterControllers;
 
-        timeStamp = 0f;
+        characterTransforms.Clear();
+        initialDisplacements.Clear();
 
-        recordedMovements.isRecording = false;
-        recordedMovements.isReplaying = true;
-    }
-
-    public void Setup()
-    {
-        CharacterController[] characters = FindObjectsByType<CharacterController>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
-
-        foreach (CharacterController character in characters)
+        foreach (CharacterController character in characterControllers)
         {
             if (character == recordedMovements.activeCharacter)
                 continue;
@@ -63,6 +59,14 @@ public class MovementReplayer : MonoBehaviour
             characterTransforms.Add(character.transform);
             initialDisplacements.Add(character.initialPosition - recordedMovements.activeCharacter.initialPosition);
         }
+    }
+
+    public void StartReplaying()
+    {
+        timeStamp = 0f;
+
+        recordedMovements.isRecording = false;
+        recordedMovements.isReplaying = true;
     }
 
     private void GetIndexes()

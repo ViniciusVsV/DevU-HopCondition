@@ -17,7 +17,7 @@ public class LevelController : MonoBehaviour
     public bool carrotReached;
 
     public UnityEvent<CharacterController> levelSelected;
-    public UnityEvent levelFinished;
+    public UnityEvent<bool> levelFinished;
 
     void Awake()
     {
@@ -47,7 +47,7 @@ public class LevelController : MonoBehaviour
 
     public void DesselectLevel()
     {
-        levelFinished.Invoke();
+        levelFinished.Invoke(false);
 
         cinemachineCamera.Priority = 0;
 
@@ -66,5 +66,10 @@ public class LevelController : MonoBehaviour
 
             reset.Reset();
         }
+    }
+
+    public CharacterController GetCharacter()
+    {
+        return character;
     }
 }
