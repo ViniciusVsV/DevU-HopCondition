@@ -131,7 +131,7 @@ public class CharacterController : MonoBehaviour, IReset
         }
     }
 
-    public void Reset()
+    public void _Reset(bool reactivate)
     {
         isDead = false;
 

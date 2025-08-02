@@ -30,7 +30,7 @@ public class BackgroundController : MonoBehaviour, IReset
         backgroundImage.color = aux;
     }
 
-    public void Reset()
+    public void _Reset(bool reactivate)
     {
         Color c = Color.white;
 

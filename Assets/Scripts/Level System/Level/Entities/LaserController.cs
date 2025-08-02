@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class LaserController : MonoBehaviour, IReset
+public class LaserController : MonoBehaviour, IActivate, IReset
 {
     [SerializeField] private GameObject laserBeam;
 
@@ -15,6 +15,8 @@ public class LaserController : MonoBehaviour, IReset
     private Animator animator;
     private Coroutine routine;
 
+    private bool isActive;
+
     void Awake()
     {
         animator = GetComponent<Animator>();
@@ -26,6 +28,9 @@ public class LaserController : MonoBehaviour, IReset
 
     void Update()
     {
+        if (!isActive)
+            return;
+
         laserCooldownTimer -= Time.deltaTime;
 
         if (laserCooldownTimer < 0f)
@@ -51,8 +56,15 @@ public class LaserController : MonoBehaviour, IReset
         animator.Play(idleAnimation.name);
     }
 
-    public void Reset()
+    public void Activate()
     {
+        isActive = true;
+    }
+
+    public void _Reset(bool reactivate)
+    {
+        isActive = false;
+
         if (routine != null)
         {
             StopCoroutine(routine);
@@ -64,5 +76,8 @@ public class LaserController : MonoBehaviour, IReset
         laserCooldownTimer = laserCooldown;
 
         animator.Play(idleAnimation.name);
+
+        if (reactivate)
+            isActive = true;
     }
 }

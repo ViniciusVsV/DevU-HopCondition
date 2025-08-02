@@ -74,7 +74,7 @@ public class LevelsManager : MonoBehaviour
 
             yield return new WaitForSeconds(levelResetDelay);
 
-            level.ResetLevel();
+            level.ResetLevel(false);
         }
 
         buttonsManager.EnableButtons();
@@ -111,20 +111,29 @@ public class LevelsManager : MonoBehaviour
 
         yield return new WaitForSeconds(levelActivatedDelay);
 
-        List<CharacterController> aux = new();
+        List<CharacterController> auxCharacters = new();
+        List<LevelController> auxLevels = new();
 
         if (!repeating)
         {
             for (int i = 0; i <= unlockLevelsCounter + 1; i++)
-                aux.Add(levelControllers[i].GetCharacter());
+            {
+                auxCharacters.Add(levelControllers[i].GetCharacter());
+                auxLevels.Add(levelControllers[i]);
+            }
         }
         else
-            aux.Add(levelControllers[unlockLevelsCounter + 1].GetCharacter());
+        {
+            auxCharacters.Add(levelControllers[unlockLevelsCounter + 1].GetCharacter());
+            auxLevels.Add(levelControllers[unlockLevelsCounter + 1]);
+        }
 
-        movementReplayer.Setup(aux);
+        movementReplayer.Setup(auxCharacters);
 
-        if (!repeating)
-            yield return new WaitForSeconds(startReplayDelay);
+        yield return new WaitForSeconds(startReplayDelay);
+
+        foreach (LevelController level in auxLevels)
+            level.ActivateLevel();
 
         movementReplayer.StartReplaying();
     }
@@ -169,7 +178,7 @@ public class LevelsManager : MonoBehaviour
 
         recordedMovements.isRecording = false;
 
-        currentLevel.ResetLevel();
+        currentLevel.ResetLevel(true);
 
         movementRecorder.StartRecording(currentLevel.GetCharacter());
     }

@@ -1,21 +1,28 @@
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour, IReset
+public class EnemyController : MonoBehaviour, IActivate, IReset
 {
     [SerializeField] private float moveSpeed;
     private int moveDirection = 1;
 
     private Vector2 initialPosition;
+    private Vector2 initialScale;
     private Rigidbody2D rb;
+
+    private bool isActive;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         initialPosition = transform.position;
+        initialScale = transform.localScale;
     }
 
     void FixedUpdate()
     {
+        if (!isActive)
+            return;
+
         rb.linearVelocityX = moveDirection * moveSpeed;
     }
 
@@ -32,9 +39,22 @@ public class EnemyController : MonoBehaviour, IReset
         moveDirection *= -1;
     }
 
-    public void Reset()
+    public void Activate()
     {
+        isActive = true;
+    }
+
+    public void _Reset(bool reactivate)
+    {
+        isActive = false;
+
+        rb.linearVelocity = Vector2.zero;
+
         moveDirection = 1;
         transform.position = initialPosition;
+        transform.localScale = initialScale;
+
+        if (reactivate)
+            isActive = true;
     }
 }

@@ -49,6 +49,8 @@ public class LevelController : MonoBehaviour
     {
         yield return new WaitForSeconds(selectionDelay);
 
+        ActivateLevel();
+
         character.isActive = true;
 
         playerInput.enabled = true;
@@ -65,7 +67,18 @@ public class LevelController : MonoBehaviour
         character.isActive = false;
     }
 
-    public void ResetLevel()
+    public void ActivateLevel()
+    {
+        foreach (GameObject entity in entities)
+        {
+            IActivate activate = entity.GetComponent<IActivate>();
+
+            if (activate != null)
+                activate.Activate();
+        }
+    }
+
+    public void ResetLevel(bool reactivate)
     {
         carrotReached = false;
 
@@ -73,7 +86,7 @@ public class LevelController : MonoBehaviour
         {
             IReset reset = entity.GetComponent<IReset>();
 
-            reset.Reset();
+            reset._Reset(reactivate);
         }
     }
     public void ActivateEntities()

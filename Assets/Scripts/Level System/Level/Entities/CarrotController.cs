@@ -52,7 +52,7 @@ public class CarrotController : MonoBehaviour, IReset
         levelController.DesselectLevel();
     }
 
-    public void Reset()
+    public void _Reset(bool reactivate)
     {
         spriteRenderer.enabled = true;
 
