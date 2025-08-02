@@ -16,17 +16,23 @@ public class LevelsManager : MonoBehaviour
     private LevelController currentLevel;
     private int unlockLevelsCounter;
 
+    [SerializeField] private float levelActivatedDelay;
+
     [Header("-------Selection Delays-------")]
     [SerializeField] private float levelResetDelay;
 
     [Header("------Replay Delays-------")]
     [SerializeField] private float showNewLevelDelay;
+    [SerializeField] private float showNewLevelRepeatingDelay;
     [SerializeField] private float startReplayDelay;
 
     public bool isWaiting;
+    public bool isOnStart;
 
     void Start()
     {
+        isOnStart = true;
+
         levelControllers = FindObjectsByType<LevelController>(FindObjectsInactive.Include, FindObjectsSortMode.None)
             .OrderBy(level => level.name)
             .ToList();
@@ -55,6 +61,15 @@ public class LevelsManager : MonoBehaviour
 
     private IEnumerator SetSelectionState()
     {
+        if (isOnStart)
+        {
+            buttonsManager.EnableButtons();
+
+            isOnStart = false;
+
+            yield break;
+        }
+
         foreach (LevelController level in levelControllers)
         {
             if (!level.gameObject.activeSelf)
@@ -88,9 +103,20 @@ public class LevelsManager : MonoBehaviour
 
     private IEnumerator ReplayingRoutine(bool repeating)
     {
-        yield return new WaitForSeconds(showNewLevelDelay);
+        if (repeating)
+        {
+            yield return new WaitForSeconds(showNewLevelRepeatingDelay);
+            Debug.Log("1");
+        }
+        else
+        {
+            yield return new WaitForSeconds(showNewLevelDelay);
+            Debug.Log("2");
+        }
 
         levelControllers[unlockLevelsCounter + 1].gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(levelActivatedDelay);
 
         List<CharacterController> aux = new();
 
@@ -104,7 +130,11 @@ public class LevelsManager : MonoBehaviour
 
         movementReplayer.Setup(aux);
 
-        yield return new WaitForSeconds(startReplayDelay);
+        if (!repeating)
+        {
+            yield return new WaitForSeconds(startReplayDelay);
+            Debug.Log("3");
+        }
 
         movementReplayer.StartReplaying();
     }
@@ -133,7 +163,7 @@ public class LevelsManager : MonoBehaviour
 
         unlockLevelsCounter++;
 
-        //Se todas as fases no total foram finalizadas
+        //Se todas as 9 fases foram finalizadas
         if (count == levelControllers.Count)
             SceneManager.LoadScene("FinalMenu");
 

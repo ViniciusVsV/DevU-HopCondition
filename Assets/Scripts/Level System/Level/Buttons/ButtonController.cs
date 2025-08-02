@@ -17,6 +17,11 @@ public class ButtonController : MonoBehaviour, IPointerEnterHandler, IPointerExi
         originalColor = buttonImage.color;
     }
 
+    void Start()
+    {
+        Disable();
+    }
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         Color newColor = originalColor;

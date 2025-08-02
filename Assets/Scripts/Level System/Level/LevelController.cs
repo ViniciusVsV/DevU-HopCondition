@@ -17,6 +17,7 @@ public class LevelController : MonoBehaviour
 
     [Header("-------Entities-------")]
     [SerializeField] private List<GameObject> entities = new();
+    [SerializeField] private GameObject entitiesFather;
 
     [Header("-------Events-------")]
     public UnityEvent<LevelController> levelSelected;
@@ -28,6 +29,11 @@ public class LevelController : MonoBehaviour
     void Awake()
     {
         playerInput = character.GetComponent<PlayerInput>();
+    }
+
+    void Start()
+    {
+        LevelActivated.Instance.ApplyEffect(this);
     }
 
     public void SelectLevel()
@@ -69,6 +75,10 @@ public class LevelController : MonoBehaviour
 
             reset.Reset();
         }
+    }
+    public void ActivateEntities()
+    {
+        entitiesFather.SetActive(true);
     }
 
     public CharacterController GetCharacter()
