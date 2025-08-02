@@ -7,6 +7,8 @@ public class ColorChanger : MonoBehaviour
     void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        SetColor(Color.blue);
     }
 
     public void SetColor(Color color)

@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class LaserController : MonoBehaviour, IActivate, IReset
 {
@@ -16,6 +17,9 @@ public class LaserController : MonoBehaviour, IActivate, IReset
     private Coroutine routine;
 
     private bool isActive;
+
+    public UnityEvent laserStarted;
+    public UnityEvent laserStopped;
 
     void Awake()
     {
@@ -47,9 +51,13 @@ public class LaserController : MonoBehaviour, IActivate, IReset
 
     private IEnumerator LaserRoutine()
     {
+        laserStarted.Invoke();
+
         laserBeam.SetActive(true);
 
         yield return new WaitForSeconds(activeDuration);
+
+        laserStopped.Invoke();
 
         laserBeam.SetActive(false);
 

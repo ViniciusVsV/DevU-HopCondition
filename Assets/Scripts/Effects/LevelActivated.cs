@@ -39,6 +39,8 @@ public class LevelActivated : MonoBehaviour
 
         yield return new WaitForSeconds(activateEntitiesDelay);
 
+        HiderDissolve.Instance.ApplyEffect(levelController.GetHider());
+
         levelController.ActivateEntities();
     }
 }

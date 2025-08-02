@@ -31,7 +31,7 @@ public class CharacterController : MonoBehaviour, IReset
     private float baseGravityScale;
 
     [HideInInspector] public Vector2 initialPosition;
-    [HideInInspector] public bool isActive;
+    public bool isActive;
     [HideInInspector] public bool jumpPressed;
     [HideInInspector] public bool isDead;
     private bool isFacingRight;
@@ -133,6 +133,8 @@ public class CharacterController : MonoBehaviour, IReset
 
     public void _Reset(bool reactivate)
     {
+        playerInput.enabled = false;
+
         isDead = false;
 
         col.enabled = true;

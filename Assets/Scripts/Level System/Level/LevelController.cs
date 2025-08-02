@@ -9,7 +9,6 @@ using UnityEngine.UI;
 public class LevelController : MonoBehaviour
 {
     [SerializeField] private CinemachineCamera cinemachineCamera;
-    [SerializeField] private CharacterController character;
 
     private PlayerInput playerInput;
 
@@ -18,6 +17,9 @@ public class LevelController : MonoBehaviour
     [Header("-------Entities-------")]
     [SerializeField] private List<GameObject> entities = new();
     [SerializeField] private GameObject entitiesFather;
+    [SerializeField] private CharacterController character;
+    [SerializeField] private GameObject hider;
+    [SerializeField] private LaserController universalLaser;
 
     [Header("-------Events-------")]
     public UnityEvent<LevelController> levelSelected;
@@ -69,9 +71,14 @@ public class LevelController : MonoBehaviour
 
     public void ActivateLevel()
     {
+        //Ativar o laser universal
+        IActivate activate = universalLaser.GetComponent<IActivate>();
+
+        activate.Activate();
+
         foreach (GameObject entity in entities)
         {
-            IActivate activate = entity.GetComponent<IActivate>();
+            activate = entity.GetComponent<IActivate>();
 
             if (activate != null)
                 activate.Activate();
@@ -82,9 +89,13 @@ public class LevelController : MonoBehaviour
     {
         carrotReached = false;
 
+        IReset reset = universalLaser.GetComponent<IReset>();
+
+        reset._Reset(reactivate);
+
         foreach (GameObject entity in entities)
         {
-            IReset reset = entity.GetComponent<IReset>();
+            reset = entity.GetComponent<IReset>();
 
             reset._Reset(reactivate);
         }
@@ -101,5 +112,9 @@ public class LevelController : MonoBehaviour
     public CinemachineCamera GetCamera()
     {
         return cinemachineCamera;
+    }
+    public GameObject GetHider()
+    {
+        return hider;
     }
 }

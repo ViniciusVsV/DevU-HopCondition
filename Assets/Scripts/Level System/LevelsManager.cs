@@ -18,9 +18,11 @@ public class LevelsManager : MonoBehaviour
     private LevelController currentLevel;
     private int unlockLevelsCounter;
 
-    [SerializeField] private CinemachineCamera mainCamera;
+    [Header("-------Menu Controller-------")]
+    [SerializeField] private GameMenusController gameMenusController;
 
     [Header("-------Selection Delays-------")]
+    [SerializeField] private float cameraTransitionDelay;
     [SerializeField] private float levelActivatedDelay;
     [SerializeField] private float levelResetDelay;
 
@@ -31,8 +33,6 @@ public class LevelsManager : MonoBehaviour
 
     public bool isWaiting;
     private bool isOnStart;
-
-    public UnityEvent selectionCancelled;
 
     void Start()
     {
@@ -64,11 +64,13 @@ public class LevelsManager : MonoBehaviour
             ResetCurrentLevel();
 
         if (currentLevel != null && !recordedMovements.isRecording && Input.GetMouseButtonDown(1))
-            CancelSelection();
+            StartCoroutine(CancelSelection());
     }
 
     private IEnumerator SetSelectionState()
     {
+        gameMenusController.DeactivateReplayMenu();
+
         if (isOnStart)
         {
             yield return new WaitForSeconds(levelActivatedDelay);
@@ -88,24 +90,39 @@ public class LevelsManager : MonoBehaviour
         buttonsManager.EnableButtons();
     }
 
-    private void CancelSelection()
+    private IEnumerator CancelSelection()
     {
         currentLevel.GetCamera().Priority = 0;
 
+        Debug.Log(currentLevel.name);
+
+        currentLevel.GetCharacter().isActive = false;
+        currentLevel.ResetLevel(false);
         currentLevel = null;
 
-        selectionCancelled.Invoke();
+        gameMenusController.DeactivateLevelMenu();
+
+        yield return new WaitForSeconds(cameraTransitionDelay);
 
         buttonsManager.EnableButtons();
     }
 
     public void SetRecordingState(LevelController currentLevel)
     {
-        this.currentLevel = currentLevel;
-
         buttonsManager.DisableButtons();
 
+        StartCoroutine(RecordingRoutine(currentLevel));
+    }
+
+    private IEnumerator RecordingRoutine(LevelController currentLevel)
+    {
+        yield return new WaitForSeconds(cameraTransitionDelay);
+
+        this.currentLevel = currentLevel;
+
         movementRecorder.StartRecording(currentLevel.GetCharacter());
+
+        gameMenusController.ActivateLevelMenu();
     }
 
     public void SetReplayingState(bool repeating)
@@ -115,6 +132,9 @@ public class LevelsManager : MonoBehaviour
         currentLevel = null;
 
         buttonsManager.DisableButtons();
+
+        gameMenusController.DeactivateLevelMenu();
+        gameMenusController.ActivateReplayMenu();
 
         StartCoroutine(ReplayingRoutine(repeating));
     }

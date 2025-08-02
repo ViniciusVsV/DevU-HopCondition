@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class FairyController : MonoBehaviour
+public class FairyController : MonoBehaviour, IReset
 {
     [SerializeField] private Transform followPoint;
 
@@ -13,9 +13,12 @@ public class FairyController : MonoBehaviour
     private Rigidbody2D rb;
     private float currentSpeed;
     private Vector2 moveDirection;
+    private Vector2 initialPosition;
 
-    void Start()
+    void Awake()
     {
+        initialPosition = transform.position;
+
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -45,5 +48,10 @@ public class FairyController : MonoBehaviour
     private void FixedUpdate()
     {
         rb.linearVelocity = moveDirection * currentSpeed;
+    }
+
+    public void _Reset(bool reactivate)
+    {
+        transform.position = initialPosition;
     }
 }
