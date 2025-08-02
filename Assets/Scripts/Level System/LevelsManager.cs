@@ -27,12 +27,9 @@ public class LevelsManager : MonoBehaviour
     [SerializeField] private float startReplayDelay;
 
     public bool isWaiting;
-    public bool isOnStart;
 
     void Start()
     {
-        isOnStart = true;
-
         levelControllers = FindObjectsByType<LevelController>(FindObjectsInactive.Include, FindObjectsSortMode.None)
             .OrderBy(level => level.name)
             .ToList();
@@ -61,14 +58,7 @@ public class LevelsManager : MonoBehaviour
 
     private IEnumerator SetSelectionState()
     {
-        if (isOnStart)
-        {
-            buttonsManager.EnableButtons();
-
-            isOnStart = false;
-
-            yield break;
-        }
+        yield return new WaitForSeconds(levelActivatedDelay);
 
         foreach (LevelController level in levelControllers)
         {
@@ -94,6 +84,8 @@ public class LevelsManager : MonoBehaviour
 
     public void SetReplayingState(bool repeating)
     {
+        recordedMovements.isRecording = false;
+
         currentLevel = null;
 
         buttonsManager.DisableButtons();
@@ -104,15 +96,9 @@ public class LevelsManager : MonoBehaviour
     private IEnumerator ReplayingRoutine(bool repeating)
     {
         if (repeating)
-        {
             yield return new WaitForSeconds(showNewLevelRepeatingDelay);
-            Debug.Log("1");
-        }
         else
-        {
             yield return new WaitForSeconds(showNewLevelDelay);
-            Debug.Log("2");
-        }
 
         levelControllers[unlockLevelsCounter + 1].gameObject.SetActive(true);
 
@@ -131,10 +117,7 @@ public class LevelsManager : MonoBehaviour
         movementReplayer.Setup(aux);
 
         if (!repeating)
-        {
             yield return new WaitForSeconds(startReplayDelay);
-            Debug.Log("3");
-        }
 
         movementReplayer.StartReplaying();
     }

@@ -34,6 +34,7 @@ public class CharacterController : MonoBehaviour, IReset
     [HideInInspector] public bool isActive;
     [HideInInspector] public bool jumpPressed;
     [HideInInspector] public bool isDead;
+    private bool isFacingRight;
 
     private void Awake()
     {
@@ -48,18 +49,24 @@ public class CharacterController : MonoBehaviour, IReset
         baseGravityScale = rb.gravityScale;
 
         initialPosition = transform.position;
+
+        isFacingRight = true;
     }
 
     private void Update()
     {
         isGrounded = Physics2D.OverlapCircle(groundCheckPoint.position, groundCheckRadius, groundLayer);
+        animator.SetBool("isGrounded", isGrounded);
+
+        if (moveDirection.x > 0f && !isFacingRight || moveDirection.x < 0f && isFacingRight)
+            Flip();
 
         if (isGrounded)
             coyoteTimeTimer = coyoteTimeDuration;
         else
             coyoteTimeTimer -= Time.deltaTime;
 
-        animator.SetFloat("xSpeed", rb.linearVelocityX);
+        animator.SetFloat("xSpeed", Mathf.Abs(rb.linearVelocityX));
         animator.SetFloat("ySpeed", rb.linearVelocityY);
     }
 
@@ -108,7 +115,7 @@ public class CharacterController : MonoBehaviour, IReset
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Spike") || other.CompareTag("Enemy"))
+        if (other.CompareTag("Spike") || other.CompareTag("Enemy") || other.CompareTag("Laser"))
         {
             isDead = true;
 
@@ -138,5 +145,12 @@ public class CharacterController : MonoBehaviour, IReset
 
         if (isActive)
             playerInput.enabled = true;
+    }
+
+    private void Flip()
+    {
+        isFacingRight = !isFacingRight;
+
+        transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y);
     }
 }
