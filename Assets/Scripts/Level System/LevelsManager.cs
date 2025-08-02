@@ -13,7 +13,10 @@ public class LevelsManager : MonoBehaviour
     private MovementReplayer movementReplayer;
 
     private ButtonsManager buttonsManager;
-    public int currentLevel;
+    private LevelController currentLevel;
+    private int unlockLevelsCounter;
+
+    public bool isWaiting;
 
     void Start()
     {
@@ -24,7 +27,7 @@ public class LevelsManager : MonoBehaviour
         movementRecorder = FindFirstObjectByType<MovementRecorder>();
         movementReplayer = FindFirstObjectByType<MovementReplayer>();
 
-        currentLevel = 0;
+        unlockLevelsCounter = 0;
 
         buttonsManager = FindFirstObjectByType<ButtonsManager>();
 
@@ -33,31 +36,16 @@ public class LevelsManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
+        if (isWaiting && (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)))
         {
-            if (recordedMovements.isRecording)
-            {
-                recordedMovements.isRecording = false;
-
-                recordedMovements.ResetData();
-
-                foreach (LevelController level in levelControllers)
-                {
-                    if (level.gameObject.activeSelf)
-                        level.ResetLevel();
-                }
-
-                //MovementRecorder.StartRecording();
-            }
-            else
-            {
-                SetSelectionState();
-            }
+            isWaiting = false;
+            SetSelectionState();
         }
+
+        if (currentLevel != null && Input.GetKeyDown(KeyCode.R))
+            ResetCurrentLevel();
     }
 
-    //Jogo começa no estado de seleção de fases
-    //Nele os botões das fases estão ativos
     public void SetSelectionState()
     {
         //Reseta todas as fases
@@ -71,27 +59,21 @@ public class LevelsManager : MonoBehaviour
         buttonsManager.EnableButtons();
     }
 
-    //Ao selecionar uma fase, vai para o estado de Recording
-    //Nele o personagem da fase selecionada é ativado e o jogo começa a gravar os inputs
-    //Acaba quando o jogador coletar a cenoura da fase
-    public void SetRecordingState(CharacterController chosenCharacter)
+    public void SetRecordingState(LevelController currentLevel)
     {
+        this.currentLevel = currentLevel;
+
         //Desativa todos os botões
         buttonsManager.DisableButtons();
 
-        recordedMovements.activeCharacter = chosenCharacter;
-
-        movementRecorder.StartRecording(chosenCharacter);
+        movementRecorder.StartRecording(currentLevel.GetCharacter());
     }
 
-    //Após finalizar a fase selecionada, inicia o estado de Replaying
-    //Nele todos os personagens diferentes do personagem que acabou de ser jogado imitarão os inputs deste
-    //Acaba quando o replay terminar
     public void SetReplayingState(bool repeating)
     {
-        currentLevel++;
+        currentLevel = null;
 
-        levelControllers[currentLevel].gameObject.SetActive(true);
+        levelControllers[unlockLevelsCounter + 1].gameObject.SetActive(true);
 
         buttonsManager.DisableButtons();
 
@@ -101,13 +83,12 @@ public class LevelsManager : MonoBehaviour
 
         if (!repeating)
         {
-            for (int i = 0; i <= currentLevel; i++)
+            for (int i = 0; i <= unlockLevelsCounter + 1; i++)
                 aux.Add(levelControllers[i].GetCharacter());
         }
-
         //Se for o caso em que o está repetindo a conclusão de fases, pegar apenas o personagem que acavou de ser criado
         else
-            aux.Add(levelControllers[currentLevel].GetCharacter());
+            aux.Add(levelControllers[unlockLevelsCounter + 1].GetCharacter());
 
         movementReplayer.Setup(aux);
 
@@ -121,10 +102,6 @@ public class LevelsManager : MonoBehaviour
         movementReplayer.StartReplaying();
     }
 
-    //Após o replay, vai para o estado de checagem de unlock
-    //Se TODOS os personagens obteram sua respectiva cenoura, desbloqueia a próxima fase
-    //Caso todas as fases já tenham sido desbloqueadas, acaba o jogo
-    //Caso contrário, volta ao estado de seleção de fases
     public void SetUnlockingState()
     {
         int count = 0;
@@ -136,19 +113,37 @@ public class LevelsManager : MonoBehaviour
 
             if (level.carrotReached == false)
             {
-                SetSelectionState();
-                return;
+                isWaiting = true;
+
+                level.levelFailed.Invoke();
             }
 
             count++;
         }
 
-        //Se todas as fazes no total foram finalizadas
+        if (isWaiting)
+            return;
+
+        unlockLevelsCounter++;
+
+        //Se todas as fases no total foram finalizadas
         if (count == levelControllers.Count)
             SceneManager.LoadScene("FinalMenu");
 
         //Se todas ATIVAS foram finalizadas
         else
             SetReplayingState(true);
+    }
+
+    public void ResetCurrentLevel()
+    {
+        if (currentLevel == null)
+            return;
+
+        recordedMovements.isRecording = false;
+
+        currentLevel.ResetLevel();
+
+        movementRecorder.StartRecording(currentLevel.GetCharacter());
     }
 }

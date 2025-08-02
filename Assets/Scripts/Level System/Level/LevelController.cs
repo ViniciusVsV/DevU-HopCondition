@@ -18,8 +18,9 @@ public class LevelController : MonoBehaviour
     [SerializeField] private List<GameObject> entities = new();
 
     [Header("-------Events-------")]
-    public UnityEvent<CharacterController> levelSelected;
+    public UnityEvent<LevelController> levelSelected;
     public UnityEvent<bool> levelFinished;
+    public UnityEvent levelFailed;
 
     public bool carrotReached;
 
@@ -33,7 +34,7 @@ public class LevelController : MonoBehaviour
         //Aumenta prioridade da câmera
         cinemachineCamera.Priority = 10;
 
-        levelSelected.Invoke(character);
+        levelSelected.Invoke(this);
 
         StartCoroutine(SelectRoutine());
     }
