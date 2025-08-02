@@ -7,6 +7,8 @@ public class BackgroundController : MonoBehaviour, IReset
     [SerializeField] private Color levelCompletedColor;
     [SerializeField] private Color levelFailedColor;
 
+    [Range(0, 255)][SerializeField] private float alpha;
+
     void Awake()
     {
         backgroundImage = GetComponent<SpriteRenderer>();
@@ -14,16 +16,25 @@ public class BackgroundController : MonoBehaviour, IReset
 
     public void SetCompletedColor()
     {
-        backgroundImage.color = levelCompletedColor;
+        Color aux = levelCompletedColor;
+
+        aux.a = alpha / 255f;
+        backgroundImage.color = aux;
     }
 
     public void SetFailedColor()
     {
-        backgroundImage.color = levelFailedColor;
+        Color aux = levelFailedColor;
+
+        aux.a = alpha / 255f;
+        backgroundImage.color = aux;
     }
 
     public void Reset()
     {
-        backgroundImage.color = Color.white;
+        Color c = Color.white;
+
+        c.a = 0f;
+        backgroundImage.color = c;
     }
 }

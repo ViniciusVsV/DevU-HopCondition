@@ -27,6 +27,7 @@ public class LevelsManager : MonoBehaviour
     [SerializeField] private float startReplayDelay;
 
     public bool isWaiting;
+    private bool isOnStart;
 
     void Start()
     {
@@ -40,6 +41,8 @@ public class LevelsManager : MonoBehaviour
         unlockLevelsCounter = 0;
 
         buttonsManager = FindFirstObjectByType<ButtonsManager>();
+
+        isOnStart = true;
 
         StartCoroutine(SetSelectionState());
     }
@@ -58,7 +61,11 @@ public class LevelsManager : MonoBehaviour
 
     private IEnumerator SetSelectionState()
     {
-        yield return new WaitForSeconds(levelActivatedDelay);
+        if (isOnStart)
+        {
+            yield return new WaitForSeconds(levelActivatedDelay);
+            isOnStart = false;
+        }
 
         foreach (LevelController level in levelControllers)
         {
