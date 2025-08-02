@@ -56,7 +56,7 @@ public class LevelController : MonoBehaviour
         playerInput.enabled = true;
     }
 
-    public void DesselectLevel()
+    public void FinishLevel()
     {
         levelFinished.Invoke(false);
 
@@ -97,5 +97,9 @@ public class LevelController : MonoBehaviour
     public CharacterController GetCharacter()
     {
         return character;
+    }
+    public CinemachineCamera GetCamera()
+    {
+        return cinemachineCamera;
     }
 }

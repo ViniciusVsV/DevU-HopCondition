@@ -49,7 +49,7 @@ public class CarrotController : MonoBehaviour, IReset
     {
         yield return new WaitForSeconds(desselectionDelay);
 
-        levelController.DesselectLevel();
+        levelController.FinishLevel();
     }
 
     public void _Reset(bool reactivate)

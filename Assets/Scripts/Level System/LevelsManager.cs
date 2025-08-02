@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class LevelsManager : MonoBehaviour
@@ -16,9 +18,10 @@ public class LevelsManager : MonoBehaviour
     private LevelController currentLevel;
     private int unlockLevelsCounter;
 
-    [SerializeField] private float levelActivatedDelay;
+    [SerializeField] private CinemachineCamera mainCamera;
 
     [Header("-------Selection Delays-------")]
+    [SerializeField] private float levelActivatedDelay;
     [SerializeField] private float levelResetDelay;
 
     [Header("------Replay Delays-------")]
@@ -28,6 +31,8 @@ public class LevelsManager : MonoBehaviour
 
     public bool isWaiting;
     private bool isOnStart;
+
+    public UnityEvent selectionCancelled;
 
     void Start()
     {
@@ -57,6 +62,9 @@ public class LevelsManager : MonoBehaviour
 
         if (currentLevel != null && Input.GetKeyDown(KeyCode.R))
             ResetCurrentLevel();
+
+        if (currentLevel != null && !recordedMovements.isRecording && Input.GetMouseButtonDown(1))
+            CancelSelection();
     }
 
     private IEnumerator SetSelectionState()
@@ -76,6 +84,17 @@ public class LevelsManager : MonoBehaviour
 
             level.ResetLevel(false);
         }
+
+        buttonsManager.EnableButtons();
+    }
+
+    private void CancelSelection()
+    {
+        currentLevel.GetCamera().Priority = 0;
+
+        currentLevel = null;
+
+        selectionCancelled.Invoke();
 
         buttonsManager.EnableButtons();
     }
