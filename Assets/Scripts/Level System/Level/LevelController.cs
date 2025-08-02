@@ -13,6 +13,7 @@ public class LevelController : MonoBehaviour
 
     private PlayerInput playerInput;
 
+    [SerializeField] private float selectionDelay;
 
     [Header("-------Entities-------")]
     [SerializeField] private List<GameObject> entities = new();
@@ -31,7 +32,6 @@ public class LevelController : MonoBehaviour
 
     public void SelectLevel()
     {
-        //Aumenta prioridade da câmera
         cinemachineCamera.Priority = 10;
 
         levelSelected.Invoke(this);
@@ -41,12 +41,10 @@ public class LevelController : MonoBehaviour
 
     private IEnumerator SelectRoutine()
     {
-        yield return new WaitForSeconds(1.3f);
+        yield return new WaitForSeconds(selectionDelay);
 
-        //Ativa booleana do controlador do personagem
         character.isActive = true;
 
-        //Ativa o input do jogador
         playerInput.enabled = true;
     }
 

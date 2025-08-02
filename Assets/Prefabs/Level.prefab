@@ -1071,6 +1071,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cinemachineCamera: {fileID: 7933524502490540703}
   character: {fileID: 4363681480843979040}
+  selectionDelay: 1.5
   entities:
   - {fileID: 2008741132555811515}
   - {fileID: 8326308103162935226}
@@ -1425,7 +1426,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   recordedMovements: {fileID: 11400000, guid: 5bbb7956e3fe01a48bf659763c635c19, type: 2}
   levelController: {fileID: 6085000040964020673}
-  desselectionDelay: 0.1
+  desselectionDelay: 0.5
   carrotCollected:
     m_PersistentCalls:
       m_Calls:

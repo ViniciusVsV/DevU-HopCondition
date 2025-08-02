@@ -16,6 +16,13 @@ public class LevelsManager : MonoBehaviour
     private LevelController currentLevel;
     private int unlockLevelsCounter;
 
+    [Header("-------Selection Delays-------")]
+    [SerializeField] private float levelResetDelay;
+
+    [Header("------Replay Delays-------")]
+    [SerializeField] private float showNewLevelDelay;
+    [SerializeField] private float startReplayDelay;
+
     public bool isWaiting;
 
     void Start()
@@ -31,7 +38,7 @@ public class LevelsManager : MonoBehaviour
 
         buttonsManager = FindFirstObjectByType<ButtonsManager>();
 
-        SetSelectionState();
+        StartCoroutine(SetSelectionState());
     }
 
     void Update()
@@ -39,23 +46,25 @@ public class LevelsManager : MonoBehaviour
         if (isWaiting && (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)))
         {
             isWaiting = false;
-            SetSelectionState();
+            StartCoroutine(SetSelectionState());
         }
 
         if (currentLevel != null && Input.GetKeyDown(KeyCode.R))
             ResetCurrentLevel();
     }
 
-    public void SetSelectionState()
+    private IEnumerator SetSelectionState()
     {
-        //Reseta todas as fases
         foreach (LevelController level in levelControllers)
         {
-            if (level.gameObject.activeSelf)
-                level.ResetLevel();
+            if (!level.gameObject.activeSelf)
+                continue;
+
+            yield return new WaitForSeconds(levelResetDelay);
+
+            level.ResetLevel();
         }
 
-        //Ativa todos os botões
         buttonsManager.EnableButtons();
     }
 
@@ -63,7 +72,6 @@ public class LevelsManager : MonoBehaviour
     {
         this.currentLevel = currentLevel;
 
-        //Desativa todos os botões
         buttonsManager.DisableButtons();
 
         movementRecorder.StartRecording(currentLevel.GetCharacter());
@@ -73,12 +81,17 @@ public class LevelsManager : MonoBehaviour
     {
         currentLevel = null;
 
-        levelControllers[unlockLevelsCounter + 1].gameObject.SetActive(true);
-
         buttonsManager.DisableButtons();
 
-        //Chamar o setup com os personagens que serão afetados
-        //Se for em caso normal, pegar todos os ativos
+        StartCoroutine(ReplayingRoutine(repeating));
+    }
+
+    private IEnumerator ReplayingRoutine(bool repeating)
+    {
+        yield return new WaitForSeconds(showNewLevelDelay);
+
+        levelControllers[unlockLevelsCounter + 1].gameObject.SetActive(true);
+
         List<CharacterController> aux = new();
 
         if (!repeating)
@@ -86,18 +99,12 @@ public class LevelsManager : MonoBehaviour
             for (int i = 0; i <= unlockLevelsCounter + 1; i++)
                 aux.Add(levelControllers[i].GetCharacter());
         }
-        //Se for o caso em que o está repetindo a conclusão de fases, pegar apenas o personagem que acavou de ser criado
         else
             aux.Add(levelControllers[unlockLevelsCounter + 1].GetCharacter());
 
         movementReplayer.Setup(aux);
 
-        StartCoroutine(ReplayingRoutine());
-    }
-
-    private IEnumerator ReplayingRoutine()
-    {
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(startReplayDelay);
 
         movementReplayer.StartReplaying();
     }
