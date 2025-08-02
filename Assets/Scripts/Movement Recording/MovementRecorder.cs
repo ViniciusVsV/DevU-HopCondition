@@ -17,7 +17,8 @@ public class MovementRecorder : MonoBehaviour
             if (recordTimer >= 1 / recordedMovements.recordFrequency)
             {
                 recordedMovements.timeStamps.Add(timeStamp);
-                recordedMovements.positions.Add(recordedMovements.activeCharacter.transform.position);
+                recordedMovements.moveDirections.Add(recordedMovements.activeCharacter.moveDirection);
+                recordedMovements.jumpPressed.Add(recordedMovements.activeCharacter.jumpPressed);
 
                 recordTimer = 0f;
             }

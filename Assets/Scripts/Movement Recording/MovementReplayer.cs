@@ -6,18 +6,15 @@ public class MovementReplayer : MonoBehaviour
 {
     [SerializeField] private RecordedMovements recordedMovements;
 
-    public List<Transform> characterTransforms = new();
-    public List<Vector2> initialDisplacements = new();
+    public List<CharacterController> characterControllers = new();
 
-    private float timeStamp;
-    private int index1, index2;
+    private float replayTimer;
+    private int currentIndex;
 
     [SerializeField] private float fastForwardSpeed = 2f;
     public bool isFastForwarded;
 
     public UnityEvent replayFinished;
-
-    public List<CharacterController> aux;
 
     private void Update()
     {
@@ -25,7 +22,7 @@ public class MovementReplayer : MonoBehaviour
         {
             Time.timeScale = isFastForwarded ? fastForwardSpeed : 1f;
 
-            if (timeStamp >= recordedMovements.timeStamps[^1])
+            if (replayTimer >= recordedMovements.timeStamps[^1])
             {
                 recordedMovements.isReplaying = false;
 
@@ -34,79 +31,44 @@ public class MovementReplayer : MonoBehaviour
                 return;
             }
 
-            timeStamp += Time.deltaTime;
+            replayTimer += Time.deltaTime;
 
-            GetIndexes();
-            ApplyMovements();
+            while (currentIndex < recordedMovements.timeStamps.Count &&
+                recordedMovements.timeStamps[currentIndex] <= replayTimer)
+            {
+                Vector2 moveDir = recordedMovements.moveDirections[currentIndex];
+                bool jumpPressed = recordedMovements.jumpPressed[currentIndex];
+
+                foreach (var controller in characterControllers)
+                {
+                    controller.moveDirection = moveDir;
+
+                    if (jumpPressed)
+                        controller.ApplyJump();
+                }
+
+                currentIndex++;
+            }
         }
         else
             Time.timeScale = 1f;
     }
 
     ///Permite passar os personagens que serão afetados pelo replay
-    public void Setup(List<CharacterController> characterControllers)
+    public void Setup(List<CharacterController> replayedCharacters)
     {
-        aux = characterControllers;
+        characterControllers = replayedCharacters;
 
-        characterTransforms.Clear();
-        initialDisplacements.Clear();
-
-        foreach (CharacterController character in characterControllers)
-        {
-            if (character == recordedMovements.activeCharacter)
-                continue;
-
-            characterTransforms.Add(character.transform);
-            initialDisplacements.Add(character.initialPosition - recordedMovements.activeCharacter.initialPosition);
-        }
+        characterControllers.Remove(recordedMovements.activeCharacter);
     }
 
     public void StartReplaying()
     {
-        timeStamp = 0f;
+        replayTimer = 0f;
+        currentIndex = 0;
 
         recordedMovements.isRecording = false;
         recordedMovements.isReplaying = true;
-    }
-
-    private void GetIndexes()
-    {
-        for (int i = 0; i < recordedMovements.timeStamps.Count - 1; i++)
-        {
-            if (recordedMovements.timeStamps[i] <= timeStamp && timeStamp < recordedMovements.timeStamps[i + 1])
-            {
-                index1 = i;
-                index2 = i + 1;
-                return;
-            }
-        }
-
-        index1 = recordedMovements.timeStamps.Count - 1;
-        index2 = recordedMovements.timeStamps.Count - 1;
-    }
-
-    private void ApplyMovements()
-    {
-        for (int i = 0; i < characterTransforms.Count; i++)
-        {
-            if (index1 == index2)
-                characterTransforms[i].position = recordedMovements.positions[index1] + initialDisplacements[i];
-
-            else
-            {
-                float aux1 = recordedMovements.timeStamps[index1];
-                float aux2 = recordedMovements.timeStamps[index2];
-
-                float interpolationFactor = (timeStamp - aux1) / (aux2 - aux1);
-
-                characterTransforms[i].position = Vector2.Lerp
-                (
-                    recordedMovements.positions[index1] + initialDisplacements[i],
-                    recordedMovements.positions[index2] + initialDisplacements[i],
-                    interpolationFactor
-                );
-            }
-        }
     }
 
     public void ToggleFastForward()

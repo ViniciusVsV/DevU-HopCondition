@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -30,6 +29,31 @@ public class LevelsManager : MonoBehaviour
         buttonsManager = FindFirstObjectByType<ButtonsManager>();
 
         SetSelectionState();
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (recordedMovements.isRecording)
+            {
+                recordedMovements.isRecording = false;
+
+                recordedMovements.ResetData();
+
+                foreach (LevelController level in levelControllers)
+                {
+                    if (level.gameObject.activeSelf)
+                        level.ResetLevel();
+                }
+
+                //MovementRecorder.StartRecording();
+            }
+            else
+            {
+                SetSelectionState();
+            }
+        }
     }
 
     //Jogo começa no estado de seleção de fases

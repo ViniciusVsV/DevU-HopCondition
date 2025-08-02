@@ -7,7 +7,8 @@ public class RecordedMovements : ScriptableObject
     public float recordFrequency;
 
     public List<float> timeStamps;
-    public List<Vector2> positions;
+    public List<Vector2> moveDirections;
+    public List<bool> jumpPressed;
 
     public CharacterController activeCharacter;
 
@@ -23,7 +24,8 @@ public class RecordedMovements : ScriptableObject
     public void ResetData()
     {
         timeStamps.Clear();
-        positions.Clear();
+        moveDirections.Clear();
+        jumpPressed.Clear();
 
         activeCharacter = null;
     }

@@ -56,4 +56,13 @@ public class GameMenuController : MonoBehaviour, IPointerEnterHandler, IPointerE
 
         Application.Quit();
     }
+
+    public void Disable()
+    {
+        gameObject.SetActive(false);
+    }
+    public void Enable()
+    {
+        gameObject.SetActive(true);
+    }
 }

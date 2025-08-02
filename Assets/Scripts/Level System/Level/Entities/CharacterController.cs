@@ -6,23 +6,18 @@ public class CharacterController : MonoBehaviour, IReset
 {
     [Header("-------Movement-------")]
     [SerializeField] private float moveSpeed;
-    private Vector2 moveDirection;
+    [HideInInspector] public Vector2 moveDirection;
 
     [Header("-------Jump-------")]
     [SerializeField] private float jumpStrength;
-    [SerializeField] private float jumpCutMultiplier;
-    [SerializeField] private float jumpBufferDuration;
-    private float jumpBufferTimer;
+    [SerializeField] private float coyoteTimeDuration;
+    private float coyoteTimeTimer;
 
     [Header("-------GroundCheck-------")]
     [SerializeField] private Transform groundCheckPoint;
     [SerializeField] private float groundCheckRadius;
     [SerializeField] private LayerMask groundLayer;
     public bool isGrounded;
-
-    [Header("-------Coyote Time-------")]
-    [SerializeField] private float coyoteTimeDuration;
-    private float coyoteTimeTimer;
 
     [Header("-------Events-------")]
     public UnityEvent characterDied;
@@ -32,8 +27,9 @@ public class CharacterController : MonoBehaviour, IReset
     private Animator animator;
     private SpriteRenderer spriteRenderer;
 
-    public Vector2 initialPosition;
+    [HideInInspector] public Vector2 initialPosition;
     public bool isActive;
+    public bool jumpPressed;
 
     private void Awake()
     {
@@ -56,8 +52,6 @@ public class CharacterController : MonoBehaviour, IReset
         else
             coyoteTimeTimer -= Time.deltaTime;
 
-        jumpBufferTimer -= Time.deltaTime;
-
         animator.SetFloat("xSpeed", rb.linearVelocityX);
         animator.SetFloat("ySpeed", rb.linearVelocityY);
     }
@@ -65,22 +59,11 @@ public class CharacterController : MonoBehaviour, IReset
     private void FixedUpdate()
     {
         rb.linearVelocityX = moveDirection.x * moveSpeed;
+    }
 
-        //Se o jumpBuffer estiver ativo
-        if (jumpBufferTimer >= Mathf.Epsilon)
-        {
-            if
-            (
-                isGrounded ||
-                rb.linearVelocityY < 0f && coyoteTimeTimer >= Mathf.Epsilon
-            )
-            {
-                rb.linearVelocityY = jumpStrength;
-                jumpBufferTimer = 0f;
-
-                animator.SetTrigger("jump");
-            }
-        }
+    private void LateUpdate()
+    {
+        jumpPressed = false;
     }
 
     public void Move(InputAction.CallbackContext context)
@@ -91,10 +74,23 @@ public class CharacterController : MonoBehaviour, IReset
     public void Jump(InputAction.CallbackContext context)
     {
         if (context.started)
-            jumpBufferTimer = jumpBufferDuration;
+            ApplyJump();
+    }
 
-        else if (context.canceled && rb.linearVelocityY > 0f)
-            rb.linearVelocityY *= jumpCutMultiplier;
+    public void ApplyJump()
+    {
+        if
+        (
+            isGrounded ||
+            rb.linearVelocityY < 0f && coyoteTimeTimer >= Mathf.Epsilon
+        )
+        {
+            jumpPressed = true;
+
+            rb.linearVelocityY = jumpStrength;
+
+            animator.SetTrigger("jump");
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -104,19 +100,18 @@ public class CharacterController : MonoBehaviour, IReset
             playerInput.enabled = false;
             spriteRenderer.enabled = false;
 
+            rb.linearVelocity = Vector2.zero;
+
             characterDied.Invoke();
         }
     }
 
     public void Reset()
     {
-        //Volta o personagem à posição inicial  
         transform.position = initialPosition;
 
-        //Reativa sprite renderer
         spriteRenderer.enabled = true;
 
-        //SE o personagem atual estiver ativo, reativa o playerINput também
         if (isActive)
             playerInput.enabled = true;
     }

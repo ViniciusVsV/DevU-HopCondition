@@ -1410,7 +1410,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   recordedMovements: {fileID: 11400000, guid: 5bbb7956e3fe01a48bf659763c635c19, type: 2}
   levelController: {fileID: 6085000040964020673}
-  desselectionDelay: 1
+  desselectionDelay: 0.1
   carrotCollected:
     m_PersistentCalls:
       m_Calls:
