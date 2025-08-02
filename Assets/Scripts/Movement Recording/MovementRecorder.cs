@@ -7,8 +7,21 @@ public class MovementRecorder : MonoBehaviour
     private float recordTimer;
     private float timeStamp;
 
+    public bool waitingForInput;
+
     private void Update()
     {
+        if (waitingForInput)
+        {
+            if (recordedMovements.activeCharacter.moveDirection != Vector2.zero || recordedMovements.activeCharacter.jumpPressed)
+            {
+                recordedMovements.isRecording = true;
+                waitingForInput = false;
+            }
+            else
+                return;
+        }
+
         if (recordedMovements.isRecording)
         {
             recordTimer += Time.deltaTime;
@@ -28,12 +41,14 @@ public class MovementRecorder : MonoBehaviour
     public void StartRecording(CharacterController chosenCharacter)
     {
         timeStamp = 0f;
+        recordTimer = 0f;
 
         recordedMovements.ResetData();
 
         recordedMovements.activeCharacter = chosenCharacter;
 
-        recordedMovements.isRecording = true;
         recordedMovements.isReplaying = false;
+
+        waitingForInput = true;
     }
 }

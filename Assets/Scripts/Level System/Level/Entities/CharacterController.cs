@@ -26,10 +26,14 @@ public class CharacterController : MonoBehaviour, IReset
     private PlayerInput playerInput;
     private Animator animator;
     private SpriteRenderer spriteRenderer;
+    private Collider2D col;
+
+    private float baseGravityScale;
 
     [HideInInspector] public Vector2 initialPosition;
-    public bool isActive;
-    public bool jumpPressed;
+    [HideInInspector] public bool isActive;
+    [HideInInspector] public bool jumpPressed;
+    [HideInInspector] public bool isDead;
 
     private void Awake()
     {
@@ -37,8 +41,11 @@ public class CharacterController : MonoBehaviour, IReset
         playerInput = GetComponent<PlayerInput>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        col = GetComponent<Collider2D>();
 
         coyoteTimeTimer = coyoteTimeDuration;
+
+        baseGravityScale = rb.gravityScale;
 
         initialPosition = transform.position;
     }
@@ -58,6 +65,9 @@ public class CharacterController : MonoBehaviour, IReset
 
     private void FixedUpdate()
     {
+        if (isDead)
+            return;
+
         rb.linearVelocityX = moveDirection.x * moveSpeed;
     }
 
@@ -79,6 +89,9 @@ public class CharacterController : MonoBehaviour, IReset
 
     public void ApplyJump()
     {
+        if (isDead)
+            return;
+
         if
         (
             isGrounded ||
@@ -97,9 +110,14 @@ public class CharacterController : MonoBehaviour, IReset
     {
         if (other.CompareTag("Spike") || other.CompareTag("Enemy"))
         {
+            isDead = true;
+
+            col.enabled = false;
+
             playerInput.enabled = false;
             spriteRenderer.enabled = false;
 
+            rb.gravityScale = 0f;
             rb.linearVelocity = Vector2.zero;
 
             characterDied.Invoke();
@@ -108,9 +126,15 @@ public class CharacterController : MonoBehaviour, IReset
 
     public void Reset()
     {
+        isDead = false;
+
+        col.enabled = true;
+
         transform.position = initialPosition;
 
         spriteRenderer.enabled = true;
+
+        rb.gravityScale = baseGravityScale;
 
         if (isActive)
             playerInput.enabled = true;
