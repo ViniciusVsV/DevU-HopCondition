@@ -1,11 +1,14 @@
 using UnityEngine;
 using UnityEngine.UI;
+using static Unity.Burst.Intrinsics.X86;
 
 public class BackgroundController : MonoBehaviour, IReset
 {
     private SpriteRenderer backgroundImage;
-    [SerializeField] private Color levelCompletedColor;
-    [SerializeField] private Color levelFailedColor;
+    //[SerializeField] private Color levelCompletedColor;
+    //[SerializeField] private Color levelFailedColor;
+    [SerializeField]private Sprite sprCompleted;
+    [SerializeField]private Sprite sprFailed;
 
     [Range(0, 255)][SerializeField] private float alpha;
 
@@ -16,18 +19,32 @@ public class BackgroundController : MonoBehaviour, IReset
 
     public void SetCompletedColor()
     {
-        Color aux = levelCompletedColor;
 
+        //Color aux = levelCompletedColor;
+
+        //aux.a = alpha / 255f;
+        //backgroundImage.color = aux;
+
+        Color aux = Color.white;
         aux.a = alpha / 255f;
+
         backgroundImage.color = aux;
+        backgroundImage.sprite = sprCompleted;
     }
 
     public void SetFailedColor()
     {
+        /*
         Color aux = levelFailedColor;
 
         aux.a = alpha / 255f;
         backgroundImage.color = aux;
+        */
+        Color aux = Color.white;
+        aux.a = alpha / 255f;
+
+        backgroundImage.color = aux;
+        backgroundImage.sprite = sprFailed;
     }
 
     public void _Reset(bool reactivate)
