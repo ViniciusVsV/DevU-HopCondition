@@ -5368,6 +5368,7 @@ MonoBehaviour:
   creatureSound: {fileID: 8300000, guid: d26d2d79311e201489084f1bdb4fa2f8, type: 3}
   trasitionSound: {fileID: 8300000, guid: ef9bf46f1b00c7d42a5c0a2078a903c3, type: 3}
   gameMusic: {fileID: 8300000, guid: fde16667d06711440ad61d4b6f75a390, type: 3}
+  menuMusic: {fileID: 8300000, guid: 8ee0fbb7c5f57af46859bd5dfc455db8, type: 3}
 --- !u!4 &1209733378
 Transform:
   m_ObjectHideFlags: 0

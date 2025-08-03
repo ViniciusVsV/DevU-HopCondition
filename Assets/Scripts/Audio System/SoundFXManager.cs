@@ -1,4 +1,6 @@
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SoundFXManager : MonoBehaviour
 {
@@ -20,10 +22,11 @@ public class SoundFXManager : MonoBehaviour
     public AudioClip failSound;
     public AudioClip creatureSound;
     public AudioClip trasitionSound;
-    
+
 
     [Header("--Musics---")]
     public AudioClip gameMusic;
+    public AudioClip menuMusic;
 
     private void Awake()
     {
@@ -38,6 +41,15 @@ public class SoundFXManager : MonoBehaviour
         }
 
         lowVolume = lowVolumeSave;
+    }
+
+    void Start()
+    {
+        if (SceneManager.GetActiveScene().name == "MainMenu" || SceneManager.GetActiveScene().name == "FinalMenu")
+            Music(menuMusic);
+
+        else
+            Music(gameMusic);
     }
 
     public void PlaySoundFXClip(AudioClip audioClip, Transform spawnTransform, float volume, float pitch = 1f)
@@ -79,6 +91,6 @@ public class SoundFXManager : MonoBehaviour
     public void unlowVolume()
     {
         lowVolume = 1f;
-        lowPitch= 1f;
+        lowPitch = 1f;
     }
 }

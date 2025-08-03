@@ -53,7 +53,7 @@ public class MovementReplayer : MonoBehaviour
                         count++;
                         if (count == characterControllers.Count)
                         {
-                            replayTimer = recordedMovements.timeStamps[^1] + finishMargin;
+                            replayTimer = recordedMovements.timeStamps[^1] + finishMargin + 0.5f;
                             return;
                         }
 
