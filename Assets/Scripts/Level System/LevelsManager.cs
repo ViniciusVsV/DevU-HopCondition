@@ -167,6 +167,7 @@ public class LevelsManager : MonoBehaviour
         }
 
         GameBackgroundChange.Instance.ApplyEffect();
+        CursorChange.Instance.SetDeactivatedCursor();
 
         levelControllers[unlockLevelsCounter + 1].gameObject.SetActive(true);
 
@@ -221,6 +222,7 @@ public class LevelsManager : MonoBehaviour
         if (isWaiting)
         {
             GameBackgroundChange.Instance.RemoveEffect();
+            CursorChange.Instance.SetNormalCursor();
 
             isReplaying = false;
 
