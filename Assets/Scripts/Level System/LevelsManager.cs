@@ -103,6 +103,7 @@ public class LevelsManager : MonoBehaviour
         currentLevel.ResetLevel(false);
         currentLevel = null;
 
+        LevelMenuController.Instance.ActivatePauseButton();
         LevelMenuController.Instance.DeactivateLevelMenu();
 
         yield return new WaitForSeconds(cameraTransitionDelay);
@@ -119,6 +120,8 @@ public class LevelsManager : MonoBehaviour
 
     private IEnumerator RecordingRoutine(LevelController currentLevel)
     {
+        LevelMenuController.Instance.DeactivatePausebutton();
+
         yield return new WaitForSeconds(cameraTransitionDelay);
 
         this.currentLevel = currentLevel;
@@ -146,6 +149,7 @@ public class LevelsManager : MonoBehaviour
 
         buttonsManager.DisableButtons();
 
+        LevelMenuController.Instance.ActivatePauseButton();
         LevelMenuController.Instance.DeactivateLevelMenu();
         ReplayMenuController.Instance.ActivateReplayMenu();
 

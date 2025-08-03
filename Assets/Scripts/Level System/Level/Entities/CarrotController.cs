@@ -61,4 +61,10 @@ public class CarrotController : MonoBehaviour, IReset
 
         col.enabled = true;
     }
+
+    public void Disable()
+    {
+        col.enabled = false;
+        spriteRenderer.enabled = false;
+    }
 }

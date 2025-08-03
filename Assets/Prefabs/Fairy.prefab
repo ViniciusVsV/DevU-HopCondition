@@ -49,10 +49,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followPoint: {fileID: 0}
-  maxSpeed: 4
+  maxSpeed: 6
   acceleration: 10
-  deceleration: 10
-  stopDistance: 0.2
+  deceleration: 30
+  stopDistance: 0.1
 --- !u!114 &4391841017558556558
 MonoBehaviour:
   m_ObjectHideFlags: 0

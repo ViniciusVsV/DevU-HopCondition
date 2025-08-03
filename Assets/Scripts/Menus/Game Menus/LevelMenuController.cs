@@ -5,6 +5,7 @@ public class LevelMenuController : MonoBehaviour
     public static LevelMenuController Instance;
 
     private Animator levelMenuAnimator;
+    [SerializeField] private Animator pauseButtonAnimator;
 
     private LevelsManager levelsManager;
 
@@ -27,6 +28,15 @@ public class LevelMenuController : MonoBehaviour
     public void DeactivateLevelMenu()
     {
         levelMenuAnimator.Play("Deactivating");
+    }
+
+    public void ActivatePauseButton()
+    {
+        pauseButtonAnimator.Play("Activating");
+    }
+    public void DeactivatePausebutton()
+    {
+        pauseButtonAnimator.Play("Deactivating");
     }
 
     public void ResetCurrentLevel()

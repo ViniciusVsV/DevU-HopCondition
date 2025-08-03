@@ -25,13 +25,16 @@ public class MovementReplayer : MonoBehaviour
     {
         if (recordedMovements.isReplaying)
         {
-            Time.timeScale = isFastForwarded ? fastForwardSpeed : 1f;
+            if (!PauseMenuController.Instance.isPaused)
+                Time.timeScale = isFastForwarded ? fastForwardSpeed : 1f;
 
             if (replayTimer >= recordedMovements.timeStamps[^1] + finishMargin)
             {
                 recordedMovements.isReplaying = false;
 
                 replayFinished.Invoke();
+
+                Time.timeScale = 1f;
 
                 return;
             }
@@ -69,8 +72,6 @@ public class MovementReplayer : MonoBehaviour
                 currentIndex++;
             }
         }
-        else
-            Time.timeScale = 1f;
 
         //Mudanacas Som
         isReplayingNow = recordedMovements.isReplaying;
