@@ -108,7 +108,7 @@ public class CharacterController : MonoBehaviour, IReset
             jumpPressed = true;
 
             rb.linearVelocityY = jumpStrength;
-
+            SoundFXManager.Instance.PlaySoundFXClip(SoundFXManager.Instance.jumpSound, transform, SoundFXManager.Instance.lowVolume, SoundFXManager.Instance.lowPitch);
             animator.SetTrigger("jump");
         }
     }

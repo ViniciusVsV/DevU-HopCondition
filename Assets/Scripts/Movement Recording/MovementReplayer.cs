@@ -16,6 +16,9 @@ public class MovementReplayer : MonoBehaviour
 
     public UnityEvent replayFinished;
 
+    //Furtado mudancas para o som
+    public bool isReplayingNow = false;
+
     private void Update()
     {
         if (recordedMovements.isReplaying)
@@ -52,7 +55,10 @@ public class MovementReplayer : MonoBehaviour
         }
         else
             Time.timeScale = 1f;
-    }
+
+        //Mudanacas Som
+       isReplayingNow = recordedMovements.isReplaying;
+}
 
     ///Permite passar os personagens que serão afetados pelo replay
     public void Setup(List<CharacterController> replayedCharacters)
