@@ -30,6 +30,9 @@ public class CarrotController : MonoBehaviour, IReset
     {
         if (other.CompareTag("Player") && !collided)
         {
+            //Play Sound
+            SoundFXManager.Instance.PlaySoundFXClip(SoundFXManager.Instance.successSound, transform, 0.75f, 1f);
+
             collided = true;
 
             col.enabled = false;

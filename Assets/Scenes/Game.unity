@@ -6625,7 +6625,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -832, y: 390}
-  m_SizeDelta: {x: 168.75, y: 131.25}
+  m_SizeDelta: {x: 110, y: 110}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1108260742
 MonoBehaviour:
@@ -6696,14 +6696,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.80784315}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -3026058171327407114, guid: 45bc245c8a7869b43bd5b253a38cc858, type: 3}
+  m_Sprite: {fileID: -2593732073867138626, guid: 2305ea3ae481e184599aee776bf59d3b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -13209,6 +13209,30 @@ PrefabInstance:
       propertyPath: levelSelected.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 2345600448846895625, guid: f666c20eff619644d8eb8247a70518bd, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 4716093874867529043, guid: e25a4d4f44b3e424d8a84ca12af314e1, type: 3}
+    - target: {fileID: 2415713322575300494, guid: f666c20eff619644d8eb8247a70518bd, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.6495953
+      objectReference: {fileID: 0}
+    - target: {fileID: 2415713322575300494, guid: f666c20eff619644d8eb8247a70518bd, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.6495953
+      objectReference: {fileID: 0}
+    - target: {fileID: 2415713322575300494, guid: f666c20eff619644d8eb8247a70518bd, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.6492618
+      objectReference: {fileID: 0}
+    - target: {fileID: 2415713322575300494, guid: f666c20eff619644d8eb8247a70518bd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 2415713322575300494, guid: f666c20eff619644d8eb8247a70518bd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.03
+      objectReference: {fileID: 0}
     - target: {fileID: 2606568113663994556, guid: f666c20eff619644d8eb8247a70518bd, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.1
@@ -13264,6 +13288,10 @@ PrefabInstance:
     - target: {fileID: 2616013345094016146, guid: f666c20eff619644d8eb8247a70518bd, type: 3}
       propertyPath: m_SortingLayer
       value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2855730541939361891, guid: f666c20eff619644d8eb8247a70518bd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.121
       objectReference: {fileID: 0}
     - target: {fileID: 3590110769714560011, guid: f666c20eff619644d8eb8247a70518bd, type: 3}
       propertyPath: m_IsActive
