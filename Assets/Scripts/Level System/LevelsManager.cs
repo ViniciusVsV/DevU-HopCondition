@@ -4,6 +4,7 @@ using System.Linq;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class LevelsManager : MonoBehaviour
@@ -16,10 +17,8 @@ public class LevelsManager : MonoBehaviour
 
     private ButtonsManager buttonsManager;
     private LevelController currentLevel;
+    private LevelController lastLevel;
     private int unlockLevelsCounter;
-
-    [Header("-------Menu Controller-------")]
-    [SerializeField] private GameMenusController gameMenusController;
 
     [Header("-------Selection Delays-------")]
     [SerializeField] private float cameraTransitionDelay;
@@ -33,7 +32,7 @@ public class LevelsManager : MonoBehaviour
 
     public bool isWaiting;
     private bool isOnStart;
-
+    public bool isReplaying;
 
     void Start()
     {
@@ -55,9 +54,14 @@ public class LevelsManager : MonoBehaviour
 
     void Update()
     {
-        if (isWaiting && (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)))
+        bool isPointerOverUI = EventSystem.current.IsPointerOverGameObject();
+
+        if (isWaiting && !isPointerOverUI && (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)))
         {
             isWaiting = false;
+
+            ReplayMenuController.Instance.DeactivateReplayMenu();
+
             StartCoroutine(SetSelectionState());
         }
 
@@ -70,8 +74,6 @@ public class LevelsManager : MonoBehaviour
 
     private IEnumerator SetSelectionState()
     {
-        gameMenusController.DeactivateReplayMenu();
-
         if (isOnStart)
         {
             yield return new WaitForSeconds(levelActivatedDelay);
@@ -101,7 +103,7 @@ public class LevelsManager : MonoBehaviour
         currentLevel.ResetLevel(false);
         currentLevel = null;
 
-        gameMenusController.DeactivateLevelMenu();
+        LevelMenuController.Instance.DeactivateLevelMenu();
 
         yield return new WaitForSeconds(cameraTransitionDelay);
 
@@ -120,37 +122,47 @@ public class LevelsManager : MonoBehaviour
         yield return new WaitForSeconds(cameraTransitionDelay);
 
         this.currentLevel = currentLevel;
+        lastLevel = currentLevel;
 
         movementRecorder.StartRecording(currentLevel.GetCharacter());
 
-        gameMenusController.ActivateLevelMenu();
+        LevelMenuController.Instance.ActivateLevelMenu();
 
         //Som
         SoundFXManager.Instance.unlowVolume();
     }
 
-    public void SetReplayingState(bool repeating)
+    public void SetReplayingState(bool repeating, bool skipIf, bool skipDelay)
     {
+        if (!skipIf && isReplaying)
+            return;
+
+        isReplaying = true;
+        isWaiting = false;
+
         recordedMovements.isRecording = false;
 
         currentLevel = null;
 
         buttonsManager.DisableButtons();
 
-        gameMenusController.DeactivateLevelMenu();
-        gameMenusController.ActivateReplayMenu();
+        LevelMenuController.Instance.DeactivateLevelMenu();
+        ReplayMenuController.Instance.ActivateReplayMenu();
 
         SoundFXManager.Instance.setlowVolume();
 
-        StartCoroutine(ReplayingRoutine(repeating));
+        StartCoroutine(ReplayingRoutine(repeating, skipDelay));
     }
 
-    private IEnumerator ReplayingRoutine(bool repeating)
+    private IEnumerator ReplayingRoutine(bool repeating, bool skipDelay)
     {
-        if (repeating)
-            yield return new WaitForSeconds(showNewLevelRepeatingDelay);
-        else
-            yield return new WaitForSeconds(showNewLevelDelay);
+        if (!skipDelay)
+        {
+            if (repeating)
+                yield return new WaitForSeconds(showNewLevelRepeatingDelay);
+            else
+                yield return new WaitForSeconds(showNewLevelDelay);
+        }
 
         GameBackgroundChange.Instance.ApplyEffect();
 
@@ -208,6 +220,8 @@ public class LevelsManager : MonoBehaviour
         {
             GameBackgroundChange.Instance.RemoveEffect();
 
+            isReplaying = false;
+
             return;
         }
 
@@ -219,7 +233,7 @@ public class LevelsManager : MonoBehaviour
 
         //Se todas ATIVAS foram finalizadas
         else
-            SetReplayingState(true);
+            SetReplayingState(true, true, false);
     }
 
     public void ResetCurrentLevel()
@@ -232,5 +246,16 @@ public class LevelsManager : MonoBehaviour
         currentLevel.ResetLevel(true);
 
         movementRecorder.StartRecording(currentLevel.GetCharacter());
+    }
+
+    public void ResetAllButLastLevel()
+    {
+        foreach (LevelController level in levelControllers)
+        {
+            if (!level.gameObject.activeSelf || level == lastLevel)
+                continue;
+
+            level.ResetLevel(true);
+        }
     }
 }

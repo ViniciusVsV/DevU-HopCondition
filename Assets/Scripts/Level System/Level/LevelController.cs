@@ -23,7 +23,7 @@ public class LevelController : MonoBehaviour
 
     [Header("-------Events-------")]
     public UnityEvent<LevelController> levelSelected;
-    public UnityEvent<bool> levelFinished;
+    public UnityEvent<bool, bool, bool> levelFinished;
     public UnityEvent levelFailed;
 
     public bool carrotReached;
@@ -63,7 +63,7 @@ public class LevelController : MonoBehaviour
 
     public void FinishLevel()
     {
-        levelFinished.Invoke(false);
+        levelFinished.Invoke(false, false, false);
 
         cinemachineCamera.Priority = 0;
 

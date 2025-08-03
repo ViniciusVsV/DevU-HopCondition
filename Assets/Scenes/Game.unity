@@ -1013,6 +1013,7 @@ GameObject:
   m_Component:
   - component: {fileID: 496611348}
   - component: {fileID: 496611349}
+  - component: {fileID: 496611350}
   m_Layer: 5
   m_Name: Replay Menu
   m_TagString: Untagged
@@ -1063,6 +1064,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &496611350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 496611347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed26e0df506a8134692a149ed242afe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pressedColor: {r: 0.5176471, g: 0.5176471, b: 0.5176471, a: 1}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1076,7 +1090,6 @@ GameObject:
   - component: {fileID: 519420029}
   - component: {fileID: 519420030}
   - component: {fileID: 519420033}
-  - component: {fileID: 519420034}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1234,18 +1247,6 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   CustomBlends: {fileID: 0}
---- !u!114 &519420034
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d73b8d203f16224d8120059a89bac95, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &537919365 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7476688310152323263, guid: f666c20eff619644d8eb8247a70518bd, type: 3}
@@ -4710,7 +4711,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 982073776}
-  - component: {fileID: 982073777}
   m_Layer: 5
   m_Name: Game Menus
   m_TagString: Untagged
@@ -4732,6 +4732,7 @@ RectTransform:
   m_Children:
   - {fileID: 1887969938}
   - {fileID: 496611348}
+  - {fileID: 1672694655}
   m_Father: {fileID: 2137355185}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -4739,20 +4740,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &982073777
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 982073775}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d12cdd07e2dd9e54aa5cc288b8f5d23e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  levelMenuAnimator: {fileID: 1887969939}
-  replayMenuAnimator: {fileID: 496611349}
 --- !u!4 &1005102153 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4989242957944909253, guid: f666c20eff619644d8eb8247a70518bd, type: 3}
@@ -5010,8 +4997,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1712915884}
-        m_TargetAssemblyTypeName: LevelsManager, Assembly-CSharp
+      - m_Target: {fileID: 1887969940}
+        m_TargetAssemblyTypeName: LevelMenuController, Assembly-CSharp
         m_MethodName: ResetCurrentLevel
         m_Mode: 1
         m_Arguments:
@@ -5512,8 +5499,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278724096
-  m_fontColor: {r: 0, g: 0.14901961, b: 0.03137255, a: 1}
+    rgba: 4278913803
+  m_fontColor: {r: 0.04150939, g: 0.04150939, b: 0.04150939, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -7311,6 +7298,55 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79967cf780d64004bb1e48fb77c36545, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1672694654
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1672694655}
+  - component: {fileID: 1672694656}
+  m_Layer: 5
+  m_Name: Pause Menu
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1672694655
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1672694654}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 982073776}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1672694656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1672694654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e28c7c06ed9a9d4bb1e3d690e289cf2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPaused: 0
 --- !u!1 &1712915882
 GameObject:
   m_ObjectHideFlags: 0
@@ -7357,7 +7393,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelControllers: []
   recordedMovements: {fileID: 11400000, guid: 5bbb7956e3fe01a48bf659763c635c19, type: 2}
-  gameMenusController: {fileID: 982073777}
   cameraTransitionDelay: 1.2
   levelActivatedDelay: 0.5
   levelResetDelay: 0.1
@@ -9080,6 +9115,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1887969938}
   - component: {fileID: 1887969939}
+  - component: {fileID: 1887969940}
   m_Layer: 5
   m_Name: Level Menu
   m_TagString: Untagged
@@ -9104,7 +9140,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 265}
+  m_AnchoredPosition: {x: -20.69, y: 265}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1887969939
@@ -9129,6 +9165,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1887969940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1887969937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acf45c2972c269440aead6f2d3b28673, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1927368037
 GameObject:
   m_ObjectHideFlags: 0
@@ -9298,8 +9346,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 982073777}
-        m_TargetAssemblyTypeName: GameMenusController, Assembly-CSharp
+      - m_Target: {fileID: 496611350}
+        m_TargetAssemblyTypeName: ReplayMenuController, Assembly-CSharp
         m_MethodName: RestartReplay
         m_Mode: 1
         m_Arguments:
@@ -10007,13 +10055,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 982073777}
-        m_TargetAssemblyTypeName: GameMenusController, Assembly-CSharp
+      - m_Target: {fileID: 496611350}
+        m_TargetAssemblyTypeName: ReplayMenuController, Assembly-CSharp
         m_MethodName: ToggleFastForward
-        m_Mode: 1
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 2090371635}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Image, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
