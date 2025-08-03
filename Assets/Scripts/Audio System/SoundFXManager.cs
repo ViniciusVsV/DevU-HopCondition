@@ -4,7 +4,7 @@ public class SoundFXManager : MonoBehaviour
 {
     public static SoundFXManager Instance;
 
-    [HideInInspector]public float lowVolume;
+    [HideInInspector] public float lowVolume;
     [HideInInspector] public float lowPitch;
 
     [SerializeField] private AudioSource _audioSource;

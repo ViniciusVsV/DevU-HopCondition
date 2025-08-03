@@ -20,8 +20,8 @@ public class HiderDissolve : MonoBehaviour
 
     private IEnumerator Routine(GameObject hider)
     {
+        SoundFXManager.Instance.PlaySoundFXClip(SoundFXManager.Instance.trasitionSound, transform, 0.6f);
 
-        SoundFXManager.Instance.PlaySoundFXClip(SoundFXManager.Instance.trasitionSound, transform, 1f);
         float elapsed = 0f;
         float startValue = 0f;
         float endValue = 1.1f;

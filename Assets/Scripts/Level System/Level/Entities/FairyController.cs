@@ -32,11 +32,9 @@ public class FairyController : MonoBehaviour, IReset
 
         else
         {
-            // Decide se acelera ou desacelera
             float targetSpeed = maxSpeed;
 
-            // Se estamos perto, começa a desacelerar
-            if (distance < 1f) // distância para começar a desacelerar
+            if (distance < 1f)
                 targetSpeed = Mathf.Lerp(0, maxSpeed, distance / 1f);
 
             currentSpeed = Mathf.MoveTowards(currentSpeed, targetSpeed, acceleration * Time.deltaTime);

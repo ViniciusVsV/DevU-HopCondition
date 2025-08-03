@@ -31,7 +31,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7798428815707572737}
-  - {fileID: 6560495712064941727}
   - {fileID: 2415713322575300494}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -52,7 +51,7 @@ MonoBehaviour:
   entities:
   - {fileID: 1897217472047524758}
   - {fileID: 4634733925126036030}
-  - {fileID: 1334221657558218700}
+  - {fileID: 4521012035953005409}
   - {fileID: 7476688310152323263}
   entitiesFather: {fileID: 555477011678667512}
   character: {fileID: 4412075695796992013}
@@ -91,8 +90,8 @@ MonoBehaviour:
   levelFailed:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4642901540387070988}
-        m_TargetAssemblyTypeName: BackgroundController, Assembly-CSharp
+      - m_Target: {fileID: 3877483930117605791}
+        m_TargetAssemblyTypeName: OverlayController, Assembly-CSharp
         m_MethodName: SetFailedColor
         m_Mode: 1
         m_Arguments:
@@ -119,7 +118,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4989242957944909253
 Transform:
   m_ObjectHideFlags: 0
@@ -136,7 +135,7 @@ Transform:
   - {fileID: 2855730541939361891}
   - {fileID: 3053504859319951474}
   - {fileID: 8973876982729796921}
-  - {fileID: 5615723447859839918}
+  - {fileID: 2947414462720155983}
   m_Father: {fileID: 7798428815707572737}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &995034360971656672
@@ -922,7 +921,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5615723447859839918}
-  - component: {fileID: 4642901540387070988}
   - component: {fileID: 2616013345094016146}
   m_Layer: 0
   m_Name: Background
@@ -940,27 +938,12 @@ Transform:
   m_GameObject: {fileID: 1334221657558218700}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.27, y: 0.34, z: -0.1213}
-  m_LocalScale: {x: 0.205, y: 0.205, z: 0.20562662}
+  m_LocalPosition: {x: -2.0019035, y: 2.991856, z: -0.0669651}
+  m_LocalScale: {x: 0.63868034, y: 0.63868034, z: 0.1313297}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4989242957944909253}
+  m_Father: {fileID: 7798428815707572737}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4642901540387070988
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1334221657558218700}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d43fffe90acda84e93084a8052a561b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sprCompleted: {fileID: 21300000, guid: f30159cad0ab394428b066225a343e4a, type: 3}
-  sprFailed: {fileID: 21300000, guid: f24058cf235a5284cad16a6fd1134179, type: 3}
-  alpha: 255
 --- !u!212 &2616013345094016146
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1004,9 +987,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1661503435
   m_SortingLayer: -1
-  m_SortingOrder: 10
-  m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_SortingOrder: 5
+  m_Sprite: {fileID: 21300000, guid: 90fd790ed9769764d82dc9868f2af788, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1187,8 +1170,8 @@ Transform:
   m_GameObject: {fileID: 3590110769714560011}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0255, y: -0.0383, z: 0}
-  m_LocalScale: {x: 12.733898, y: 6.58647, z: 1}
+  m_LocalPosition: {x: -0.05, y: 0.0448, z: 0}
+  m_LocalScale: {x: 0.65096855, y: 0.65096855, z: 0.65096855}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2606568113663994556}
@@ -1350,7 +1333,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 0
---- !u!1 &4051548952942605364
+--- !u!1 &4521012035953005409
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1358,40 +1341,55 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6560495712064941727}
-  - component: {fileID: 1595224925962126212}
+  - component: {fileID: 2947414462720155983}
+  - component: {fileID: 3877483930117605791}
+  - component: {fileID: 7768016787517599478}
   m_Layer: 0
-  m_Name: Sprite Mask
+  m_Name: Overlay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6560495712064941727
+--- !u!4 &2947414462720155983
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4051548952942605364}
+  m_GameObject: {fileID: 4521012035953005409}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.0604, y: -0.0302, z: 0}
-  m_LocalScale: {x: 12.644208, y: 6.499804, z: 1}
+  m_LocalPosition: {x: -0.27, y: 0.288, z: 0}
+  m_LocalScale: {x: 0.20798588, y: 0.20203447, z: 0.6264635}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2606568113663994556}
+  m_Father: {fileID: 4989242957944909253}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!331 &1595224925962126212
-SpriteMask:
+--- !u!114 &3877483930117605791
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4051548952942605364}
+  m_GameObject: {fileID: 4521012035953005409}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d43fffe90acda84e93084a8052a561b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprCompleted: {fileID: 21300000, guid: f30159cad0ab394428b066225a343e4a, type: 3}
+  sprFailed: {fileID: 21300000, guid: f24058cf235a5284cad16a6fd1134179, type: 3}
+--- !u!212 &7768016787517599478
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4521012035953005409}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
   m_MotionVectors: 1
@@ -1405,7 +1403,7 @@ SpriteMask:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 15d0c3709176029428a0da2f8cecf0b5, type: 2}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1418,25 +1416,25 @@ SpriteMask:
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
+  m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_MaskAlphaCutoff: 0.2
-  m_FrontSortingLayerID: 0
-  m_BackSortingLayerID: 0
-  m_FrontSortingLayer: 0
-  m_BackSortingLayer: 0
-  m_FrontSortingOrder: 0
-  m_BackSortingOrder: 0
-  m_IsCustomRangeActive: 0
+  m_SortingLayerID: 1661503435
+  m_SortingLayer: -1
+  m_SortingOrder: 10
+  m_Sprite: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 60, y: 33.75}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 0
+  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
-  m_MaskSource: 0
 --- !u!1 &4634733925126036030
 GameObject:
   m_ObjectHideFlags: 0
@@ -1452,7 +1450,7 @@ GameObject:
   - component: {fileID: 573761076725366186}
   m_Layer: 0
   m_Name: Carrot
-  m_TagString: Untagged
+  m_TagString: Carrot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1466,7 +1464,7 @@ Transform:
   m_GameObject: {fileID: 4634733925126036030}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.31, y: -2.2, z: -0.054334898}
+  m_LocalPosition: {x: 5.238, y: -2.2, z: -0.054334898}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1490,8 +1488,8 @@ MonoBehaviour:
   carrotCollected:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4642901540387070988}
-        m_TargetAssemblyTypeName: BackgroundController, Assembly-CSharp
+      - m_Target: {fileID: 3877483930117605791}
+        m_TargetAssemblyTypeName: OverlayController, Assembly-CSharp
         m_MethodName: SetCompletedColor
         m_Mode: 1
         m_Arguments:
@@ -1701,6 +1699,7 @@ Transform:
   m_Children:
   - {fileID: 2151950770597351857}
   - {fileID: 4989242957944909253}
+  - {fileID: 5615723447859839918}
   - {fileID: 737450602413099187}
   - {fileID: 2365878171677262356}
   m_Father: {fileID: 2606568113663994556}
@@ -1855,7 +1854,7 @@ PrefabInstance:
     - target: {fileID: 4054181645405823288, guid: 869f5ba915523be43ba771daa1d69872, type: 3}
       propertyPath: characterDied.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 4642901540387070988}
+      objectReference: {fileID: 3877483930117605791}
     - target: {fileID: 4054181645405823288, guid: 869f5ba915523be43ba771daa1d69872, type: 3}
       propertyPath: characterDied.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -1866,7 +1865,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4054181645405823288, guid: 869f5ba915523be43ba771daa1d69872, type: 3}
       propertyPath: characterDied.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: BackgroundController, Assembly-CSharp
+      value: OverlayController, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4054181645405823288, guid: 869f5ba915523be43ba771daa1d69872, type: 3}
       propertyPath: characterDied.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName

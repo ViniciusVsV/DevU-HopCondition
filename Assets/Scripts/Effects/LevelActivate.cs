@@ -1,9 +1,9 @@
 using System.Collections;
 using UnityEngine;
 
-public class LevelActivated : MonoBehaviour
+public class LevelActivate : MonoBehaviour
 {
-    public static LevelActivated Instance;
+    public static LevelActivate Instance;
 
     [SerializeField] private float duration;
     [SerializeField] private float activateEntitiesDelay;

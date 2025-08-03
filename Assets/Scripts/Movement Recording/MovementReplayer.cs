@@ -14,6 +14,8 @@ public class MovementReplayer : MonoBehaviour
     [SerializeField] private float fastForwardSpeed = 2f;
     public bool isFastForwarded;
 
+    [SerializeField] private float finishMargin;
+
     public UnityEvent replayFinished;
 
     //Furtado mudancas para o som
@@ -25,7 +27,7 @@ public class MovementReplayer : MonoBehaviour
         {
             Time.timeScale = isFastForwarded ? fastForwardSpeed : 1f;
 
-            if (replayTimer >= recordedMovements.timeStamps[^1])
+            if (replayTimer >= recordedMovements.timeStamps[^1] + finishMargin)
             {
                 recordedMovements.isReplaying = false;
 
@@ -44,6 +46,9 @@ public class MovementReplayer : MonoBehaviour
 
                 foreach (var controller in characterControllers)
                 {
+                    if (controller.carrotReached)
+                        continue;
+
                     controller.moveDirection = moveDir;
 
                     if (jumpPressed)
@@ -57,8 +62,8 @@ public class MovementReplayer : MonoBehaviour
             Time.timeScale = 1f;
 
         //Mudanacas Som
-       isReplayingNow = recordedMovements.isReplaying;
-}
+        isReplayingNow = recordedMovements.isReplaying;
+    }
 
     ///Permite passar os personagens que serão afetados pelo replay
     public void Setup(List<CharacterController> replayedCharacters)

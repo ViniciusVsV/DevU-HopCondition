@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Border
   - Laser
+  - Carrot
   layers:
   - Default
   - TransparentFX

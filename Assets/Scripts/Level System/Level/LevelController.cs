@@ -31,11 +31,14 @@ public class LevelController : MonoBehaviour
     void Awake()
     {
         playerInput = character.GetComponent<PlayerInput>();
+
+        transform.localScale = new Vector2(0.1f, 0.1f);
+        entitiesFather.SetActive(false);
     }
 
     void Start()
     {
-        LevelActivated.Instance.ApplyEffect(this);
+        LevelActivate.Instance.ApplyEffect(this);
     }
 
     public void SelectLevel()
@@ -71,14 +74,13 @@ public class LevelController : MonoBehaviour
 
     public void ActivateLevel()
     {
-        //Ativar o laser universal
-        IActivate activate = universalLaser.GetComponent<IActivate>();
+        IReset reset = universalLaser.GetComponent<IReset>();
 
-        activate.Activate();
+        reset._Reset(true);
 
         foreach (GameObject entity in entities)
         {
-            activate = entity.GetComponent<IActivate>();
+            IActivate activate = entity.GetComponent<IActivate>();
 
             if (activate != null)
                 activate.Activate();

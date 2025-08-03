@@ -23,8 +23,8 @@ public class LaserController : MonoBehaviour, IActivate, IReset
     public UnityEvent laserStopped;
 
     //Universal laser para o som
-    [SerializeField]private GameObject universalLaser;
-    
+    [SerializeField] private GameObject universalLaser;
+
 
     void Awake()
     {
@@ -61,18 +61,16 @@ public class LaserController : MonoBehaviour, IActivate, IReset
         laserBeam.SetActive(true);
 
         //Play sound Laser
-        if (this.gameObject != universalLaser) { 
-        SoundFXManager.Instance.PlaySoundFXClip(SoundFXManager.Instance.laserSound, transform, SoundFXManager.Instance.lowVolume*0.75f, SoundFXManager.Instance.lowPitch);
-        }
-        yield return new WaitForSeconds(activeDuration);
+        if (gameObject != universalLaser)
+            SoundFXManager.Instance.PlaySoundFXClip(SoundFXManager.Instance.laserSound, transform, SoundFXManager.Instance.lowVolume * 0.75f, SoundFXManager.Instance.lowPitch);
 
-        laserStopped.Invoke();
+        yield return new WaitForSeconds(activeDuration);
 
         laserBeam.SetActive(false);
 
-        animator.Play(idleAnimation.name);
+        laserStopped.Invoke();
 
-        
+        animator.Play(idleAnimation.name);
     }
 
     public void Activate()
@@ -91,6 +89,8 @@ public class LaserController : MonoBehaviour, IActivate, IReset
         }
 
         laserBeam.SetActive(false);
+
+        laserStopped.Invoke();
 
         laserCooldownTimer = laserCooldown;
 

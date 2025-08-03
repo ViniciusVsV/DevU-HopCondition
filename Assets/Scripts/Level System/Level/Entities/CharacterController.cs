@@ -8,7 +8,7 @@ public class CharacterController : MonoBehaviour, IReset
 
     [Header("-------Movement-------")]
     [SerializeField] private float moveSpeed;
-    [HideInInspector] public Vector2 moveDirection;
+    public Vector2 moveDirection;
 
     [Header("-------Jump-------")]
     [SerializeField] private float jumpStrength;
@@ -32,11 +32,12 @@ public class CharacterController : MonoBehaviour, IReset
 
     private float baseGravityScale;
 
-    [HideInInspector] public Vector2 initialPosition;
+    private Vector2 initialPosition;
     public bool isActive;
     [HideInInspector] public bool jumpPressed;
-    [HideInInspector] public bool isDead;
+    private bool isDead;
     private bool isFacingRight;
+    public bool carrotReached;
 
     private void Awake()
     {
@@ -77,7 +78,10 @@ public class CharacterController : MonoBehaviour, IReset
     private void FixedUpdate()
     {
         if (isDead)
+        {
+            rb.linearVelocityX = 0f;
             return;
+        }
 
         rb.linearVelocityX = moveDirection.x * moveSpeed;
     }
@@ -139,6 +143,14 @@ public class CharacterController : MonoBehaviour, IReset
 
             characterDied.Invoke();
         }
+
+        else if (other.CompareTag("Carrot"))
+        {
+            collided = true;
+
+            carrotReached = true;
+            isDead = true;
+        }
     }
 
     public void _Reset(bool reactivate)
@@ -146,14 +158,20 @@ public class CharacterController : MonoBehaviour, IReset
         playerInput.enabled = false;
 
         isDead = false;
+        carrotReached = false;
 
         col.enabled = true;
 
         transform.position = initialPosition;
 
+        transform.localScale = new Vector2(1f, 1f);
+        isFacingRight = true;
+
         spriteRenderer.enabled = true;
 
         rb.gravityScale = baseGravityScale;
+
+        moveDirection = Vector2.zero;
 
         if (isActive)
             playerInput.enabled = true;

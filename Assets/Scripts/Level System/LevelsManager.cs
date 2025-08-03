@@ -34,7 +34,7 @@ public class LevelsManager : MonoBehaviour
     public bool isWaiting;
     private bool isOnStart;
 
-    
+
     void Start()
     {
         levelControllers = FindObjectsByType<LevelController>(FindObjectsInactive.Include, FindObjectsSortMode.None)
@@ -140,9 +140,7 @@ public class LevelsManager : MonoBehaviour
         gameMenusController.DeactivateLevelMenu();
         gameMenusController.ActivateReplayMenu();
 
-        //Som
         SoundFXManager.Instance.setlowVolume();
-        
 
         StartCoroutine(ReplayingRoutine(repeating));
     }
@@ -153,6 +151,8 @@ public class LevelsManager : MonoBehaviour
             yield return new WaitForSeconds(showNewLevelRepeatingDelay);
         else
             yield return new WaitForSeconds(showNewLevelDelay);
+
+        GameBackgroundChange.Instance.ApplyEffect();
 
         levelControllers[unlockLevelsCounter + 1].gameObject.SetActive(true);
 
@@ -205,7 +205,11 @@ public class LevelsManager : MonoBehaviour
         }
 
         if (isWaiting)
+        {
+            GameBackgroundChange.Instance.RemoveEffect();
+
             return;
+        }
 
         unlockLevelsCounter++;
 
