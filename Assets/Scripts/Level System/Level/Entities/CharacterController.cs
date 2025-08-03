@@ -35,7 +35,7 @@ public class CharacterController : MonoBehaviour, IReset
     private Vector2 initialPosition;
     public bool isActive;
     [HideInInspector] public bool jumpPressed;
-    private bool isDead;
+    public bool isDead;
     private bool isFacingRight;
     public bool carrotReached;
 

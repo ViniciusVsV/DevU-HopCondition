@@ -44,10 +44,21 @@ public class MovementReplayer : MonoBehaviour
                 Vector2 moveDir = recordedMovements.moveDirections[currentIndex];
                 bool jumpPressed = recordedMovements.jumpPressed[currentIndex];
 
+                int count = 0;
+
                 foreach (var controller in characterControllers)
                 {
-                    if (controller.carrotReached)
+                    if (controller.carrotReached || controller.isDead)
+                    {
+                        count++;
+                        if (count == characterControllers.Count)
+                        {
+                            replayTimer = recordedMovements.timeStamps[^1] + finishMargin;
+                            return;
+                        }
+
                         continue;
+                    }
 
                     controller.moveDirection = moveDir;
 
