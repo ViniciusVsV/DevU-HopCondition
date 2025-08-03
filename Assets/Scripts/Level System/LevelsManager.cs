@@ -97,8 +97,6 @@ public class LevelsManager : MonoBehaviour
     {
         currentLevel.GetCamera().Priority = 0;
 
-        Debug.Log(currentLevel.name);
-
         currentLevel.GetCharacter().isActive = false;
         currentLevel.ResetLevel(false);
         currentLevel = null;
