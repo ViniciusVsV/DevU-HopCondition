@@ -12,6 +12,7 @@ public class CarrotController : MonoBehaviour, IReset
     private Collider2D col;
 
     private bool collided;
+    public bool collected;
 
     public UnityEvent carrotCollected;
 
@@ -32,6 +33,8 @@ public class CarrotController : MonoBehaviour, IReset
         {
             //Play Sound
             SoundFXManager.Instance.PlaySoundFXClip(SoundFXManager.Instance.successSound, transform, 0.75f, 1f);
+
+            collected = true;
 
             collided = true;
 
@@ -57,6 +60,8 @@ public class CarrotController : MonoBehaviour, IReset
 
     public void _Reset(bool reactivate)
     {
+        collected = false;
+
         spriteRenderer.enabled = true;
 
         col.enabled = true;

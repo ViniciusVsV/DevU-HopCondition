@@ -25,6 +25,9 @@ public class TimerController : MonoBehaviour, IActivate, IReset
         if (!isActive)
             return;
 
+        if (carrot.collected)
+            Deactivate();
+
         if (timeLimitTimer <= 0f)
         {
             timeLimitTimer = 0;
