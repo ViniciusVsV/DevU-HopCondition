@@ -4,6 +4,8 @@ using UnityEngine.InputSystem;
 
 public class CharacterController : MonoBehaviour, IReset
 {
+    public bool collided;
+
     [Header("-------Movement-------")]
     [SerializeField] private float moveSpeed;
     [HideInInspector] public Vector2 moveDirection;
@@ -68,6 +70,8 @@ public class CharacterController : MonoBehaviour, IReset
 
         animator.SetFloat("xSpeed", Mathf.Abs(rb.linearVelocityX));
         animator.SetFloat("ySpeed", rb.linearVelocityY);
+
+        collided = false;
     }
 
     private void FixedUpdate()
@@ -115,8 +119,14 @@ public class CharacterController : MonoBehaviour, IReset
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (collided)
+        {
+            return;
+        }
+
         if (other.CompareTag("Spike") || other.CompareTag("Enemy") || other.CompareTag("Laser"))
         {
+            collided = true;
             isDead = true;
 
             col.enabled = false;

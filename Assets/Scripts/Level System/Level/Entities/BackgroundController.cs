@@ -45,6 +45,8 @@ public class BackgroundController : MonoBehaviour, IReset
 
         backgroundImage.color = aux;
         backgroundImage.sprite = sprFailed;
+
+        SoundFXManager.Instance.PlaySoundFXClip(SoundFXManager.Instance.failSound, transform, 1f);
     }
 
     public void _Reset(bool reactivate)

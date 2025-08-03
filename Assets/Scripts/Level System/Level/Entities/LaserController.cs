@@ -62,7 +62,7 @@ public class LaserController : MonoBehaviour, IActivate, IReset
 
         //Play sound Laser
         if (this.gameObject != universalLaser) { 
-        SoundFXManager.Instance.PlaySoundFXClip(SoundFXManager.Instance.laserSound, transform, SoundFXManager.Instance.lowVolume, SoundFXManager.Instance.lowPitch);
+        SoundFXManager.Instance.PlaySoundFXClip(SoundFXManager.Instance.laserSound, transform, SoundFXManager.Instance.lowVolume*0.75f, SoundFXManager.Instance.lowPitch);
         }
         yield return new WaitForSeconds(activeDuration);
 

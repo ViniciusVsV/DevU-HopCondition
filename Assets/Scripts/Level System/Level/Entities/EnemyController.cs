@@ -37,11 +37,14 @@ public class EnemyController : MonoBehaviour, IActivate, IReset
         transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
 
         moveDirection *= -1;
+
+        
     }
 
     public void Activate()
     {
         isActive = true;
+        SoundFXManager.Instance.PlaySoundFXClip(SoundFXManager.Instance.creatureSound, transform, SoundFXManager.Instance.lowVolume );
     }
 
     public void _Reset(bool reactivate)
